@@ -1,0 +1,107 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  /* margin:0; */
+  /* height: 100%; */
+  min-height: 100%;
+}
+
+.header {
+  flex: 0 0;
+  /* background-color: red; */
+  margin: 1vh 2vw;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20vw;
+
+}
+
+.header-left{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2vw;
+}
+
+.header-right{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-top: 2vw; */
+}
+
+.contacts{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2vw;
+}
+
+.contacts__phone{
+  @media (max-width: 768px) {
+    font-size:0;
+  }
+}
+
+.navigation{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 2vw;
+  flex-wrap: wrap;
+}
+
+.log-in{
+  margin-left: 2vw;
+}
+
+.main {
+    flex: auto;
+    @media (max-width: 500px) {
+      background: url(../files/images/CyprusBackgroundVertical.jpg) no-repeat;
+      /* background-position: unset; */
+      /* background-position: 0% 50%; */
+      
+    }
+    background: url(../files/images/CyprusBackgroundHorizontal.jpg) no-repeat;
+    background-size: cover;   
+    background-position: center; 
+}
+
+.main-info{
+  margin: 5vw 5vw;
+  text-align: center;
+  color: white;
+  font-size: min(7vw, 3rem);
+}
+
+.main-info span{
+  background-color: #BB763E;
+}
+
+.additional-info{
+  display: flex;
+}
+
+footer {
+    height: 40px;
+}
+
+.logo{
+  /* object-fit; */
+  width: max(6vw, 50px);
+  height: max(3vw, 25px);;
+  object-fit: cover;
+}
+
+.img-icon{
+  width: max(1.5vw, 20px);
+  height: max(1.5vw, 20px); 
+}
+
+img {
+  height: 100%;
+  width: 100%;
+}
