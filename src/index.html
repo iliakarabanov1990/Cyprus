@@ -1,24 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="/">
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 <body>
-<header>
-    <nav>
-        <ul>
-            <li><a is="router-link" href="/products/123">Product 123</a></li>
-            <li><a is="router-link" href="/products/456">Product 456</a></li>
-            <li><a is="router-link" href="/products">Products</a></li>
-            <li><a is="router-link" href="/history">History</a></li>
-        </ul>
-    </nav>
-</header>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <img src="<%= require('./files/images/logo-icon.png') %>" alt="logo Cyprus family">
+                </div>
+                <section class="contacts">
+                    <div class="contacts__email-box">                   
+                        <a href="mailto:iliakarabanov@gmail.com">
+                            <img src="../files/images/email-icon.png" alt="email icon" class="img-icon">
+                        </a>
+                    </div> 
 
-<router-outlet>
-    <div style="position: absolute; background-color: red; color: white; font-size: 3em; inset: 0;">LOADING</div>
-</router-outlet>
+                    <div class="contacts__instagram-box">                      
+                        <a href="https://www.instagram.com/iliakarabano">
+                            <img src="../files/images/instagram-icon.png" alt="instagram icon" class="img-icon">
+                        </a>
+                    </div> 
+                    <div class="contacts__phone-box">                     
+                        <a href="+375333531119" class="contacts__phone">
+                            <img src="../files/images/phone-icon.png" alt="phone icon" class="img-icon">
+                            +375333531119
+                        </a>
+                    </div>  
+                </section>             
+            </div>
+            <div class="header-right">        
+                <nav class="navigation">
+                    <ul>
+                        <li><a is="router-link" href="/">Главная</a></li>
+                        <li><a is="router-link" href="/complexes">Каталог</a></li>
+                        <li><a is="router-link" href="/history">Отмеченные</a></li>
+                    </ul>
+                </nav>
+                <div class="log-in">
+                    <a href="#">Войти</a>                
+                </div>
+            </div>
+        </header>
+        <main class="main">
+            <router-outlet>
+                <div style="position: absolute; background-color: red; color: white; font-size: 3em; inset: 0;">LOADING</div>
+            </router-outlet>
+        </main>
+        <footer class="footer">
+            footer
+        </footer>
+    </div>
 </body>
 </html>

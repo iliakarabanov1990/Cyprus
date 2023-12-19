@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a is="router-link" href="/products/123">Product 123</a></li>
+                <li><a is="router-link" href="/products/456">Product 456</a></li>
+                <li><a is="router-link" href="/complexes">Комплексы</a></li>
+                <li><a is="router-link" href="/history">History</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <router-outlet>
+        <div style="position: absolute; background-color: red; color: white; font-size: 3em; inset: 0;">LOADING</div>
+    </router-outlet>
+</body>
+</html>

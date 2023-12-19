@@ -1,12 +1,16 @@
 import {RedirectPath, Router} from "./router";
-import {CartPage, HistoryPage, ProductPage, ProductsPage} from "./pages";
+import {CartPage, HistoryPage, ProductPage, ProductsPage, ResidentialComplexesPage, HomePage} from "./pages";
 
+import './styles/style.scss';
+ import './files/images/logo-icon.png';  
+ 
 import listPath from './list.json';
 
 const appRouter = new Router([
   {
     path: '',
-    redirectTo: '/products'
+    page: HomePage,
+    // redirectTo: '/products'
   },
   {
     path: 'cart',
@@ -22,10 +26,14 @@ const appRouter = new Router([
     ],
   },
   {
-    path: 'products',
-    page: ProductsPage,
-    resolve: {
-      productList: () => fetch(listPath).then(response => response.json()),
+    path: 'complexes',
+    page: ResidentialComplexesPage,
+    resolve: {  
+      productList: () => {
+        return {img: 'complexImg',
+        description: 'first test'}
+      },
+      complexesList: () => fetch(listPath).then(response => response.json()),
     },
   },
   {

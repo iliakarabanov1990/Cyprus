@@ -1,0 +1,21 @@
+*{padding: 0;margin: 0;border: 0;}
+*,*:before,*:after{-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box; border: solid black 1px;}
+:focus,:active{outline: none;}
+a:focus,a:active{outline: none;}
+nav,footer,header,aside{display: block;}
+html,body{
+  height:100%;width:100%;
+  font-size:100%;line-height:1;-ms-text-size-adjust:100%;-moz-text-size-adjust:100%;-webkit-text-size-adjust:100%;}
+input,button,textarea{font-family:inherit;}
+input::-ms-clear{display: none;}
+button{cursor: pointer;}
+button::-moz-focus-inner{padding:0;border:0;}
+a,a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li{list-style: none;}
+img{vertical-align: top;}
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
+a{color:inherit;}
+.wrapper{display:flex;flex-direction:column;min-height:100%}.header{flex:0 0;margin:1vh 2vw;display:flex;justify-content:space-between;align-items:center;gap:20vw}.header-left{display:column;justify-content:space-between;align-items:center;gap:2vw}.header-right{display:column;justify-content:space-between;align-items:center;gap:2vw}.contacts{display:flex;justify-content:space-between;align-items:center;gap:2vw}@media(max-width: 768px){.contacts__phone{font-size:0}}.navigation{display:flex;justify-content:left;align-items:center;gap:2vw;flex-wrap:wrap}.log-in{margin-left:2vw}.main{flex:auto}.wrapper-first-page{background:url(images/c13a812a0472bf3a7654.jpg) no-repeat;background-size:cover;height:calc(100vh - 50px)}@media(max-width: 500px){.wrapper-first-page{background:url(images/0e095f04a25ac778fbe7.jpg) no-repeat;background-size:cover}}.wrapper-first-page span{line-height:1.2}.main-info{margin:5vw 5vw;text-align:center;color:#fff;font-size:min(7vw,3rem)}.main-info span{background-color:#bb763e}.additional-info{display:flex;flex-wrap:wrap}.additional-info{display:flex;justify-content:space-between;align-items:center;gap:2vw}footer{height:40px}.logo{width:max(6vw,50px);height:max(3vw,25px);object-fit:cover}.img-icon{width:max(1.5vw,20px);height:max(1.5vw,20px)}img{height:100%;width:100%}
+
+/*# sourceMappingURL=style.c9318728c9b93ffba42b.css.map*/

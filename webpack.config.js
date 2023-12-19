@@ -37,6 +37,14 @@ module.exports = {
                 exclude: /index\.html$/,
                 type: 'asset/source'
             },
+            {
+                test: /\.(jpg|png)$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'images/[contenthash][ext]'
+                }
+                // use: 'url-loader',
+            },
         ]
     },
     plugins: [
@@ -46,7 +54,7 @@ module.exports = {
             scriptLoading: 'defer',
         }),
         new MiniCssExtractPlugin({
-            filename: 'style.[contenthash].css'
+            filename: './style.[contenthash].css'
         }),
     ],
     devtool: 'source-map',

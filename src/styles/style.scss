@@ -1,35 +1,38 @@
+@import "reset.css";
+
+@mixin flex-box($direction: column, $justify-content: space-between, $align-items: center, $gap: 2vw){
+  display: $direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  gap: $gap;
+}
+
+
+
+
 .wrapper {
   display: flex;
   flex-direction: column;
-  /* margin:0; */
-  /* height: 100%; */
   min-height: 100%;
 }
 
+
+
 .header {
   flex: 0 0;
-  /* background-color: red; */
   margin: 1vh 2vw;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20vw;
-
 }
 
 .header-left{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2vw;
+  @include flex-box();
 }
 
 .header-right{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* margin-top: 2vw; */
+  @include flex-box();
 }
 
 .contacts{
@@ -59,15 +62,23 @@
 
 .main {
     flex: auto;
-    @media (max-width: 500px) {
-      background: url(../files/images/CyprusBackgroundVertical.jpg) no-repeat;
-      /* background-position: unset; */
-      /* background-position: 0% 50%; */
-      
-    }
-    background: url(../files/images/CyprusBackgroundHorizontal.jpg) no-repeat;
-    background-size: cover;   
-    background-position: center; 
+}
+
+.wrapper-first-page{
+  background: url(../files/images/CyprusBackgroundHorizontal.jpg) no-repeat;
+  @media (max-width: 500px) {
+    background: url(../files/images/CyprusBackgroundVertical.jpg) no-repeat;
+    background-size: cover;     
+  }
+  background-size: cover;   
+  height: calc(100vh - 50px);
+}
+
+.wrapper-first-page span{
+  /* display: inline-block; */
+  line-height: 1.2;
+  /* height: 4rem;
+  vertical-align: middle; */
 }
 
 .main-info{
@@ -83,6 +94,14 @@
 
 .additional-info{
   display: flex;
+  flex-wrap: wrap;
+}
+
+.additional-info{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2vw;
 }
 
 footer {
