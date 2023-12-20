@@ -1,1 +1,0 @@
-export type tableRecords = Array<Record<string, string | number | boolean>>;

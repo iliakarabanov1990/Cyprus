@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "name3",
+    "description": 1,
+    "latitude": "12234",
+    "longitude": "1234"
+  },
+  {
+    "id": 2,
+    "name": "name2",
+    "description": 12,
+    "latitude": "12234",
+    "longitude": "1234"
+  },
+  {
+    "id": 3,
+    "name": "name3",
+    "description": 123,
+    "latitude": "12234",
+    "longitude": "1234"
+  },
+  {
+    "id": 4,
+    "name": "name4",
+    "description": 1234,
+    "latitude": "12234",
+    "longitude": "1234"
+  },
+  {
+    "id": 5,
+    "name": "name5",
+    "description": 1235,
+    "latitude": "12234",
+    "longitude": "1234"
+  },
+  {
+    "id": 6,
+    "name": "name6",
+    "description": 1236,
+    "latitude": "12234",
+    "longitude": "1234"
+  }
+]

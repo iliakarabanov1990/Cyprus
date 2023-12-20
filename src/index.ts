@@ -2,9 +2,14 @@ import {RedirectPath, Router} from "./router";
 import {CartPage, HistoryPage, ProductPage, ProductsPage, ResidentialComplexesPage, HomePage} from "./pages";
 
 import './styles/style.scss';
- import './files/images/logo-icon.png';  
+//  import './files/images/logo-icon.png';  
  
-import listPath from './list.json';
+import listPath from 'listLocations.json';
+import { dataMap } from "./models/listsAndEnums/dataMap";
+import { dbTables } from "./models/listsAndEnums/dbTables";
+
+// await locations.updateFromDB();
+// await complexes.updateFromDB();
 
 const appRouter = new Router([
   {
@@ -29,11 +34,11 @@ const appRouter = new Router([
     path: 'complexes',
     page: ResidentialComplexesPage,
     resolve: {  
-      productList: () => {
-        return {img: 'complexImg',
-        description: 'first test'}
+      complexList: () => {
+        dataMap.get(dbTables.locations)?.updateFromDB();
+        // complexes.updateFromDB();
       },
-      complexesList: () => fetch(listPath).then(response => response.json()),
+      // complexesList: () => fetch(listPath).then(response => response.json()),
     },
   },
   {

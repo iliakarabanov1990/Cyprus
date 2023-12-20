@@ -1,5 +1,5 @@
 export enum dbTables {
-    areas,
+    locations,
     complexes, 
     properties,
     propertyType,
