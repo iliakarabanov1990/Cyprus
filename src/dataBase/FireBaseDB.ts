@@ -5,6 +5,8 @@ import { idDB } from "../models/interfacesAndTypes/idDB";
 
 import listLocations from './listLocations.json';
 import listComplexes from './listComplexes.json';
+import listApartment from './listApartment.json'; 
+import { tableFieldValue } from "../models/interfacesAndTypes/tableFieldValue";
 
 export class FireBaseDB extends DataBase{
 
@@ -22,20 +24,54 @@ export class FireBaseDB extends DataBase{
     };
 
     getByQuery(query: string): Promise<tableDB>{
-        return Promise.resolve(fetch(listLocations).then(response => response.json()));
+        return fetch(listApartment)
+        .then(response => response.json())
     };
 
-    getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB | undefined>{
+    getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB>{
         
+        let list: any;
+
         switch (table) {
             case dbTables.locations:
-                return Promise.resolve(fetch(listLocations).then(response => response.json()));
+                list = listLocations;
+                break;
             case dbTables.complexes:
-                return Promise.resolve(fetch(listComplexes).then(response => response.json()));
+                list = listComplexes;
+                break;
+            case dbTables.apartments:
+                list = listApartment;
+                break;
             default:
-                return Promise.resolve(undefined);
-        }       
+                return Promise.resolve([]);
+        }      
+        
+        return fetch(list).then(response => response.json());
     };  
+
+    getByForeignKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB>{
+
+    let list: any;
+
+    switch (table) {
+        case dbTables.locations:
+            list = listLocations;
+            break;
+        case dbTables.complexes:
+            list = listComplexes;
+            break;
+        case dbTables.apartments:
+            list = listApartment;
+            break;
+        default:
+            return Promise.resolve([]);
+    }
+    
+        return fetch(list)
+        .then(response => response.json())
+        .then(mass => mass.filter((el: {[id: idDB]: tableFieldValue}) => foreignKeys.includes(el[fieldName])));
+        // return Promise.resolve(fetch(listLocations).then(response => response.json()));
+    };
 
     // abstract set(table: dbTables, tableRecords: tableRecord | tableDB): Promise<boolean>;
 

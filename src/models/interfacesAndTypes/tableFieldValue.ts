@@ -1,1 +1,1 @@
-export type tableFieldValue = string | number | boolean | Date;
+export type tableFieldValue = string | number | boolean | Date | string[];

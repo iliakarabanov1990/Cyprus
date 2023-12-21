@@ -11,14 +11,14 @@ export class LocationList extends ObjectList<Location>{
         super();
     }
 
-    async updateFromDB(): Promise<boolean>{
+    // async updateFromDB(): Promise<boolean>{
 
-        const newItemsDB = await this.checkNewItems(Location.tableName);
-        if (newItemsDB)
-            this.createNewItems(newItemsDB);
+    //     const newItemsDB = await this.checkNewItems(Location.tableName);
+    //     if (newItemsDB)
+    //         this.createNewItems(newItemsDB);
 
-        return Promise.resolve(true);
-    }
+    //     return Promise.resolve(true);
+    // }
 
     createNewItems(newItemsDB: tableDB): void{
 

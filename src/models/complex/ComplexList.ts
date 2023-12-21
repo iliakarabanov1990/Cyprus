@@ -10,12 +10,14 @@ export class ComplexList extends ObjectList<Complex>{
         super();
     }
 
-    async updateFromDB(): Promise<boolean>{
+    // async updateFromDB(): Promise<boolean>{
 
-        const newItemsDB: tableDB = await this.checkNewItems(Complex.tableName);
-        this.createNewItems(newItemsDB);
-        return Promise.resolve(true);
-    }
+    //     const newItemsDB = await this.checkNewItems(Complex.tableName);
+    //     if (newItemsDB)
+    //         this.createNewItems(newItemsDB);
+
+    //     return Promise.resolve(true);
+    // }
 
     createNewItems(newItemsDB: tableDB): void{
 

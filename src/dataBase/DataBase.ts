@@ -1,6 +1,7 @@
 import { dbTables } from "../models/listsAndEnums/dbTables";
 import { idDB } from "../models/interfacesAndTypes/idDB";
 import { tableDB } from "../models/interfacesAndTypes/tableDB";
+import { tableFieldValue } from "../models/interfacesAndTypes/tableFieldValue";
 
 export abstract class DataBase{
     readonly #ready: boolean;
@@ -18,6 +19,8 @@ export abstract class DataBase{
     abstract get(table: dbTables, id?: idDB): Promise<tableDB>;
 
     abstract getByQuery(query: string): Promise<tableDB>;
+
+    abstract getByForeignKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB>;
 
     abstract getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB | undefined>;
 

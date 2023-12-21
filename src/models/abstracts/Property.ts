@@ -1,24 +1,24 @@
 import { ObjectDB } from "./ObjectDB";
-import { IDBObject } from "../interfacesAndTypes/IDBObject.";
 import { idDB } from "../interfacesAndTypes/idDB";
-import { propertyOptions } from "../listsAndEnums/propertyOptions";
-import { dbTables } from "../listsAndEnums/dbTables";
 import { Location } from "../location/Location";
+import { propertyTypes } from "../listsAndEnums/propertyTypes";
 
 export abstract class Property extends ObjectDB{
     protected _location: Location | undefined; 
     protected _name: string;
     protected _description: string;
+    protected _propertyType: propertyTypes | undefined;
     protected _propertyOptions: string[];//propertyOptions[];
+    protected _price: number;
 
     constructor(id: idDB){
         super(id); 
         this._name = '';
         this._description = '';
-        this._propertyOptions = [];  
+        this._propertyOptions = [];      
+        this._price = 0;
     }
 
-    
 
     // abstract updateFromDB(): Promise<boolean>;
 
@@ -38,4 +38,11 @@ export abstract class Property extends ObjectDB{
         return this._propertyOptions;
     }
 
+    get propertyType(): propertyTypes | undefined{
+        return this._propertyType;
+    }
+
+    get price(): number{
+        return this._price;
+    }
 }

@@ -5,7 +5,7 @@
     "description": 1,
     "minPrice": 98000,
     "maxPrice": 197000,
-    "locationId": 1,
+    "complexId": 1,
     "propertyOptions": [ "outdoor", "pool", "indoorPool" ]
   },
   {
@@ -14,7 +14,7 @@
     "description": 12,
     "minPrice": 93000,
     "maxPrice": 187000,
-    "locationId": 2,
+    "complexId": 2,
     "propertyOptions": [ "videoSurveillance", "pool", "indoorPool" ]
   },
   {
@@ -23,7 +23,7 @@
     "description": 123,
     "minPrice": 88000,
     "maxPrice": 199000,
-    "locationId": 3,
+    "complexId": 3,
     "propertyOptions": [ "bar", "pool", "indoorPool" ]
   },
   {
@@ -32,7 +32,7 @@
     "description": 1234,
     "minPrice": 198000,
     "maxPrice": 199000,
-    "locationId": 4,
+    "complexId": 4,
     "propertyOptions": [ "restaurant", "pool", "indoorPool" ]
   },
   {
@@ -41,7 +41,7 @@
     "description": 1235,
     "minPrice": 96000,
     "maxPrice": 297000,
-    "locationId": 6,
+    "complexId": 6,
     "propertyOptions": [ "fitnessRoom", "pool", "indoorPool" ]
   },
   {
@@ -50,7 +50,7 @@
     "description": 1236,
     "minPrice": 98000,
     "maxPrice": 197000,
-    "locationId": 5,
+    "complexId": 5,
     "propertyOptions": [ "pool", "indoorPool" ]
   },
   {
@@ -59,7 +59,7 @@
     "description": 12367,
     "minPrice": 102000,
     "maxPrice": 204000,
-    "locationId": 6,
+    "complexId": 6,
     "propertyOptions": [ "pool", "indoorPool" ]
   }
 ]

@@ -2,19 +2,17 @@ import { ServiceDB } from "../../dataBase/ServiceDB";
 import { idDB } from "../interfacesAndTypes/idDB";
 import { tableDB } from "../interfacesAndTypes/tableDB";
 import { tableRecord } from "../interfacesAndTypes/tableRecord";
-import { dataMap } from "../listsAndEnums/dataMap";
 import { dbTables } from "../listsAndEnums/dbTables";
 import { ObjectDB } from "./ObjectDB";
 
 export abstract class ObjectList<T extends ObjectDB> {
    
-    protected objectList: Map<idDB, T>; 
+    protected _objectList: Map<idDB, T>; 
 
     constructor(){
-        this.objectList = new Map<idDB, T>();
+        this._objectList = new Map<idDB, T>();
     }
 
-    abstract updateFromDB(): Promise<boolean>;
     abstract createNewItems(newItemsDB: tableDB): void;
     abstract createNewItem(id: idDB, newItemsDB: tableRecord): ObjectDB;
     abstract getItem(id: idDB, tableRecord?: tableRecord): T | undefined;
@@ -27,8 +25,23 @@ export abstract class ObjectList<T extends ObjectDB> {
         
     }
 
-    findItem(id: idDB): T | undefined{
-        return this.objectList.get(id);
+    async updateFromDB(tableName: dbTables): Promise<boolean>{
+
+        const newItemsDB = await this.checkNewItems(tableName);
+        if (newItemsDB)
+            this.createNewItems(newItemsDB);
+
+        return Promise.resolve(true);
     }
+
+    findItem(id: idDB): T | undefined{
+        return this._objectList.get(id);
+    }
+
+    get objectList(): Map<idDB, T>{
+        return this._objectList;
+    }
+
+
 
 }
