@@ -35,7 +35,8 @@ export class Complex extends Property{
         this._description = record.description as string;
         this._propertyOptions = record.propertyOptions as string[];
         this.#minPrice = record.minPrice as number;
-        this.#maxPrice = record.maxPrice as number;      
+        this.#maxPrice = record.maxPrice as number; 
+        this._imgMain = record.imgMain as string;     
     }
 
     get minPrice(): number{

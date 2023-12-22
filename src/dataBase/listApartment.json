@@ -1,65 +1,65 @@
 [
   {
     "id": 1,
-    "name": "name3",
-    "description": 1,
-    "minPrice": 98000,
-    "maxPrice": 197000,
+    "name": "apartmentName1",
+    "description": "good flatl",
+    "price": 98000,
     "complexId": 1,
-    "propertyOptions": [ "outdoor", "pool", "indoorPool" ]
+    "propertyOptions": [ "outdoor", "pool", "indoorPool" ],
+    "imgMain": "https://profit-images-bucket.s3.eu-central-1.amazonaws.com/images/315914/conversions/661e2c86240782eb2fcb017f2b16d1d1-thumb.jpg"
   },
   {
     "id": 2,
-    "name": "name2",
+    "name": "apartmentName2",
     "description": 12,
-    "minPrice": 93000,
-    "maxPrice": 187000,
-    "complexId": 2,
-    "propertyOptions": [ "videoSurveillance", "pool", "indoorPool" ]
+    "price": 187000,
+    "complexId": 1,
+    "propertyOptions": [ "videoSurveillance", "pool", "indoorPool" ],
+    "imgMain": "https://profit-images-bucket.s3.eu-central-1.amazonaws.com/images/315914/conversions/661e2c86240782eb2fcb017f2b16d1d1-thumb.jpg"
   },
   {
     "id": 3,
-    "name": "name3",
+    "name": "apartmentName3",
     "description": 123,
-    "minPrice": 88000,
-    "maxPrice": 199000,
-    "complexId": 3,
-    "propertyOptions": [ "bar", "pool", "indoorPool" ]
+    "price": 200000,
+    "complexId": 2,
+    "propertyOptions": [ "bar", "pool", "indoorPool" ],
+    "imgMain": "https://profit-images-bucket.s3.eu-central-1.amazonaws.com/images/315914/conversions/661e2c86240782eb2fcb017f2b16d1d1-thumb.jpg"
   },
   {
     "id": 4,
-    "name": "name4",
+    "name": "apartmentName4",
     "description": 1234,
-    "minPrice": 198000,
-    "maxPrice": 199000,
-    "complexId": 4,
-    "propertyOptions": [ "restaurant", "pool", "indoorPool" ]
+    "price": 198000,
+    "complexId": 2,
+    "propertyOptions": [ "restaurant", "pool", "indoorPool" ],
+    "imgMain": "https://profit-images-bucket.s3.eu-central-1.amazonaws.com/images/315914/conversions/661e2c86240782eb2fcb017f2b16d1d1-thumb.jpg"
   },
   {
     "id": 5,
-    "name": "name5",
+    "name": "apartmentName5",
     "description": 1235,
-    "minPrice": 96000,
-    "maxPrice": 297000,
-    "complexId": 6,
-    "propertyOptions": [ "fitnessRoom", "pool", "indoorPool" ]
+    "price": 96000,
+    "complexId": 2,
+    "propertyOptions": [ "fitnessRoom", "pool", "indoorPool" ],
+    "imgMain": "https://profit-images-bucket.s3.eu-central-1.amazonaws.com/images/315914/conversions/661e2c86240782eb2fcb017f2b16d1d1-thumb.jpg"
   },
   {
     "id": 6,
-    "name": "name6",
+    "name": "apartmentName6",
     "description": 1236,
-    "minPrice": 98000,
-    "maxPrice": 197000,
-    "complexId": 5,
-    "propertyOptions": [ "pool", "indoorPool" ]
+    "price": 197000,
+    "complexId": 2,
+    "propertyOptions": [ "pool", "indoorPool" ],
+    "imgMain": "https://profit-images-bucket.s3.eu-central-1.amazonaws.com/images/315914/conversions/661e2c86240782eb2fcb017f2b16d1d1-thumb.jpg"
   },
   {
     "id": 7,
-    "name": "name7",
+    "name": "apartmentName7",
     "description": 12367,
-    "minPrice": 102000,
-    "maxPrice": 204000,
-    "complexId": 6,
-    "propertyOptions": [ "pool", "indoorPool" ]
+    "price": 204000,
+    "complexId": 3,
+    "propertyOptions": [ "pool", "indoorPool" ],
+    "imgMain": "https://profit-images-bucket.s3.eu-central-1.amazonaws.com/images/315914/conversions/661e2c86240782eb2fcb017f2b16d1d1-thumb.jpg"
   }
 ]

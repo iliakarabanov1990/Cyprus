@@ -14,7 +14,7 @@ templateItemEl.innerHTML = templateItem;
 export class ComplexPage extends AbstractPage {
   render(): HTMLElement | DocumentFragment {
 
-    if(!this.routeState.resolvedData){
+    if(!this.routeState.resolvedData || !this.routeState.resolvedData.apartList){
       return templateEl.content.cloneNode(true) as DocumentFragment; 
     }
 
@@ -24,6 +24,7 @@ export class ComplexPage extends AbstractPage {
 
     const complexSections: DocumentFragment[] = Array.from(apartments).map((el) => {
       const cloneTemplateItemEl = templateItemEl.content.cloneNode(true) as DocumentFragment;
+      const imgEl = cloneTemplateItemEl.querySelector('.apartment-box__img')!;
       const nameEl = cloneTemplateItemEl.querySelector('.apartment-box__name')!;
       const roomsNumberEl = cloneTemplateItemEl.querySelector('.apartment-box__roomsNumber')!;
       const commissioningDateEl = cloneTemplateItemEl.querySelector('.apartment-box__commissioningDate')!;
@@ -31,6 +32,7 @@ export class ComplexPage extends AbstractPage {
       const descriptionEl = cloneTemplateItemEl.querySelector('.apartment-box__description')!;
       const propertyOptionsEl = cloneTemplateItemEl.querySelector('.apartment-box__propertyOptions')!;
 
+      imgEl.setAttribute('src', el.imgMain);
       nameEl.textContent = el.name;
       roomsNumberEl.textContent = el.roomsNumber?.toString() ?? null;
       commissioningDateEl.textContent = el.commissioningDate?.toString() ?? null;

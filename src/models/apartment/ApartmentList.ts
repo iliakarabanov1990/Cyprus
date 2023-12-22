@@ -41,10 +41,12 @@ export class ApartmentList extends ObjectList<Apartment>{
         return apartment;
     }
 
-    getByComplexId(id: idDB): Promise<tableDB>{
+    getByComplexId(id: idDB): Promise<boolean>{
 
-        return ServiceDB.currDB.getByForeignKeys(dbTables.apartments, "comlexId", [id]);
-
+        return ServiceDB.currDB.getByForeignKeys(dbTables.apartments, "complexId", [Number(id)])
+        .then((dataRows) => this.createNewItems(dataRows))
+        .then(() => true)
+        .catch(() => false);
     }
 
 }

@@ -1,0 +1,21 @@
+*{padding: 0;margin: 0;border: 0;}
+*,*:before,*:after{-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box; border: solid black 1px;}
+:focus,:active{outline: none;}
+a:focus,a:active{outline: none;}
+nav,footer,header,aside{display: block;}
+html,body{
+  height:100%;width:100%;
+  font-size:100%;line-height:1;-ms-text-size-adjust:100%;-moz-text-size-adjust:100%;-webkit-text-size-adjust:100%;}
+input,button,textarea{font-family:inherit;}
+input::-ms-clear{display: none;}
+button{cursor: pointer;}
+button::-moz-focus-inner{padding:0;border:0;}
+a,a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li{list-style: none;}
+img{vertical-align: top;}
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
+a{color:inherit;}
+html{font-size:16px}h1{font-size:3rem;font-weight:bolder}h2{font-size:--medium;font-weight:bold}.wrapper{display:flex;flex-direction:column;min-height:100%}.header{flex:0 0;margin:1vh 2vw;display:flex;justify-content:space-between;align-items:center;gap:20vw}.header-left{display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:2vw;flex-wrap:nowrap}.header-right{display:flex;flex-direction:row;justify-content:right;align-items:center;gap:2vw;flex-wrap:wrap}.contacts{display:flex;justify-content:space-between;align-items:center;gap:2vw}.contacts__phone{font-size:16px}@media(max-width: 768px){.contacts__phone{font-size:0}}.navigation{display:flex;flex-direction:row;justify-content:right;align-items:center;gap:1vw;flex-wrap:wrap;font-size:16px}.main{flex:auto}.wrapper-first-page{background:url(images/c13a812a0472bf3a7654.jpg) no-repeat;background-size:cover;height:calc(100vh - 50px)}@media(max-width: 500px){.wrapper-first-page{background:url(images/0e095f04a25ac778fbe7.jpg) no-repeat;background-size:cover}}.wrapper-first-page span{line-height:1.2}.main-info{margin:5vw 5vw;text-align:center;color:#fff}.main-info span{background-color:#bb763e}.additional-info{display:flex;flex-wrap:wrap}.additional-info{display:flex;justify-content:space-between;align-items:center;gap:2vw}footer{height:40px}.logo{width:max(6vw,50px);height:max(3vw,25px);object-fit:cover}.img-icon{width:max(1.5vw,20px);height:max(1.5vw,20px)}img{height:100%;width:100%}.wrapper-complexes{display:grid;grid-gap:10px;grid-template-columns:repeat(auto-fill, 300px)}
+
+/*# sourceMappingURL=style.026c27d3696a3441eec3.css.map*/

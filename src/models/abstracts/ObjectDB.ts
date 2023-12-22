@@ -5,11 +5,13 @@ import { tableRecord } from "../interfacesAndTypes/tableRecord";
 export abstract class ObjectDB{
 
     // protected _properties: tableRecord;   
-    protected id: idDB;
+    protected _id: idDB;
+    protected _imgMain: string;
     static readonly tableName: dbTables;
 
     constructor(id: idDB){
-        this.id = id;
+        this._id = id;
+        this._imgMain = `https://gallerix.ru/fullpic/0cd13e0f52241cbf30d391910d396981/`;
         // this._properties = {};
 
         //if(tablesName instanceof dbTables)
@@ -20,6 +22,14 @@ export abstract class ObjectDB{
 
     abstract fillFromDB(): Promise<boolean>;
     abstract fillFromData(record: tableRecord): void;
+
+    get id(): idDB{
+        return this._id;
+    }
+
+    get imgMain(): string{
+        return this._imgMain;
+    }
 
     // get properties(){
     //     return this._properties;

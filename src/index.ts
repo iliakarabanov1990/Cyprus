@@ -51,9 +51,7 @@ const appRouter = new Router([
     resolve: {  
       apartList: (state) => {
         const apartList = dataMap.get(dbTables.apartments) as ApartmentList;
-        apartList.getByComplexId(state.params.complexId)
-        .then(() => true)
-        .catch(()=> false)
+        return apartList.getByComplexId(state.params.complexId)
       },
       // complexesList: () => fetch(listPath).then(response => response.json()),
     },

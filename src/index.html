@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
     <title>Document</title>
+</head>
 <body>
     <div class="wrapper">
         <header class="header">
@@ -14,26 +16,26 @@
                 <section class="contacts">
                     <div class="contacts__email-box">                   
                         <a href="mailto:iliakarabanov@gmail.com">
-                            <img src="../files/images/email-icon.png" alt="email icon" class="img-icon">
+                            <img src="<%= require('./files/images/email-icon.png') %>" alt="email icon" class="img-icon">
                         </a>
                     </div> 
 
                     <div class="contacts__instagram-box">                      
                         <a href="https://www.instagram.com/iliakarabano">
-                            <img src="../files/images/instagram-icon.png" alt="instagram icon" class="img-icon">
+                            <img src="<%= require('./files/images/instagram-icon.png') %>" alt="instagram icon" class="img-icon">
                         </a>
                     </div> 
                     <div class="contacts__phone-box">                     
                         <a href="+375333531119" class="contacts__phone">
-                            <img src="../files/images/phone-icon.png" alt="phone icon" class="img-icon">
+                            <img src="<%= require('./files/images/phone-icon.png') %>" alt="phone icon" class="img-icon">
                             +375333531119
                         </a>
                     </div>  
                 </section>             
             </div>
             <div class="header-right">        
-                <nav class="navigation">
-                    <ul>
+                <nav>
+                    <ul class="navigation">
                         <li><a is="router-link" href="/">Главная</a></li>
                         <li><a is="router-link" href="/complexes">Каталог</a></li>
                         <li><a is="router-link" href="/history">Отмеченные</a></li>

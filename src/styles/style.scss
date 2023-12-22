@@ -1,22 +1,41 @@
 @import "reset.css";
 
-@mixin flex-box($direction: column, $justify-content: space-between, $align-items: center, $gap: 2vw){
-  display: $direction;
+$base-font-size: 16px;
+$small-font-size: .8rem;
+$medium-font-size: 1rem;
+$large-font-size: 1.5rem;
+$small-header-font-size: 1rem;
+$medium-header-font-size: 1.5rem;
+$large-header-font-size: 3rem;
+
+@mixin flex-box($direction: column, $justify-content: space-between, $align-items: center, $gap: 2vw, $flex-wrap: nowrap){
+  display: flex;
+  flex-direction: $direction;
   justify-content: $justify-content;
   align-items: $align-items;
   gap: $gap;
+  flex-wrap: $flex-wrap;
 }
 
+html {
+  font-size: $base-font-size;
+}
 
+h1 {
+  font-size: $large-header-font-size; 
+  font-weight: bolder;
+}
 
+h2 {
+  font-size: --medium; 
+  font-weight: bold;
+}
 
 .wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100%;
 }
-
-
 
 .header {
   flex: 0 0;
@@ -28,11 +47,11 @@
 }
 
 .header-left{
-  @include flex-box();
+  @include flex-box(row);
 }
 
 .header-right{
-  @include flex-box();
+  @include flex-box(row, right, center, 2vw, wrap);
 }
 
 .contacts{
@@ -40,24 +59,23 @@
   justify-content: space-between;
   align-items: center;
   gap: 2vw;
+  // font-size: 16px;
 }
 
 .contacts__phone{
   @media (max-width: 768px) {
     font-size:0;
   }
+  font-size: 16px;
 }
 
 .navigation{
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  gap: 2vw;
-  flex-wrap: wrap;
+  @include flex-box(row, right, center, 1vw, wrap);
+  font-size: 16px;
 }
 
 .log-in{
-  margin-left: 2vw;
+  // margin-left: 2vw;
 }
 
 .main {
@@ -75,17 +93,14 @@
 }
 
 .wrapper-first-page span{
-  /* display: inline-block; */
   line-height: 1.2;
-  /* height: 4rem;
-  vertical-align: middle; */
 }
 
 .main-info{
   margin: 5vw 5vw;
   text-align: center;
   color: white;
-  font-size: min(7vw, 3rem);
+  // font-size: min(7vw, 3rem);
 }
 
 .main-info span{
@@ -104,12 +119,15 @@
   gap: 2vw;
 }
 
+.apartment-box{
+  @include flex-box(row, left, top, 2vw);
+}
+
 footer {
     height: 40px;
 }
 
 .logo{
-  /* object-fit; */
   width: max(6vw, 50px);
   height: max(3vw, 25px);;
   object-fit: cover;
@@ -123,12 +141,13 @@ footer {
 img {
   height: 100%;
   width: 100%;
+  // width: max(15vw, 200px);
+  // height: max(15vw, 200px); 
 }
 
-/////////////////////////////
-/// residentialComplexes ///
-/////////////////////////////
-.complex-box{
+.wrapper-complexes{
   display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, 300px);
 
 }
