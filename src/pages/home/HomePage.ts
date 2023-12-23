@@ -1,4 +1,4 @@
-import {AbstractPage} from "../router";
+import {AbstractPage} from "../../router";
 import template from './homePage.html';
 
 const templEl = document.createElement('template');

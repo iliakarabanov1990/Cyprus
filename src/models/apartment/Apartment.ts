@@ -27,14 +27,11 @@ export class Apartment extends ResidentialProperty{
 
     fillFromData(record: tableRecord): void{
 
+        super.fillFromData(record);
+
         this.#complex = dataMap.get(dbTables.complexes)?.getItem(record.complexId as number) as Complex;
-        this._name = record.name as string;
-        this._description = record.description as string;
-        this._price = record.price as number;
-        this._propertyOptions = record.propertyOptions as string[];    
         this._roomsNumber = record.roomsNumber as roomsNumberTypes;
         this._commissioningDate = record.commissioningDate as Date;
-        this._imgMain = record.imgMain as string;
     }
 
 }

@@ -3,6 +3,7 @@ import { idDB } from "../interfacesAndTypes/idDB";
 import { tableRecord } from "../interfacesAndTypes/tableRecord";
 import { dataMap } from "../listsAndEnums/dataMap";
 import { dbTables } from "../listsAndEnums/dbTables";
+import { propertyOptions } from "../listsAndEnums/propertyOptions";
 import { propertyTypes } from "../listsAndEnums/propertyTypes";
 import { Location } from "../location/Location";
 
@@ -30,13 +31,10 @@ export class Complex extends Property{
 
     fillFromData(record: tableRecord): void{
 
-        this._location = dataMap.get(dbTables.locations)?.getItem(record.locationId as number) as Location;
-        this._name = record.name as string;
-        this._description = record.description as string;
-        this._propertyOptions = record.propertyOptions as string[];
+        super.fillFromData(record);
+           
         this.#minPrice = record.minPrice as number;
-        this.#maxPrice = record.maxPrice as number; 
-        this._imgMain = record.imgMain as string;     
+        this.#maxPrice = record.maxPrice as number;  
     }
 
     get minPrice(): number{

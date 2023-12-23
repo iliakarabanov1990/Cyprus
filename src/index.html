@@ -42,9 +42,33 @@
                     </ul>
                 </nav>
                 <div class="log-in">
-                    <a href="#">Войти</a>                
+                    <button onclick="document.getElementById('id-log-in').style.display='block'" style="width:auto;">Войти</button>                
                 </div>
             </div>
+
+            <div id="id-log-in" class="modal">      
+                <form class="modal-content animate" name="log-in">
+                    <div class="close-container">
+                        <span onclick="document.getElementById('id-log-in').style.display='none'" class="close" title="Close Modal">&times;</span>
+                    </div>
+                    <div class="container">
+                        <label for="user-phone"><b>Телефон</b></label>
+                        <input type="tel" placeholder="Введите телефон" name="user-phone" required>   
+                        <ul id = "phoneError" class="error-list"></ul>             
+                        <label for="user-email"><b>Электронная почта</b></label>
+                        <input type="email" placeholder="Введите e-mail *необязательно" name="user-email">  
+                        <ul id = "emailError" class="error-list"></ul>                    
+                        <label for="user-name"><b>Имя</b></label>
+                        <input type="text" placeholder="Введите имя *необязательно" name="user-name">
+                        <ul id = "nameError" class="error-list"></ul>
+                        <label for="user-password"><b>Пароль</b></label>
+                        <input type="password" placeholder="Введите пароль" name="user-password" required>
+                        <ul id = "passwordError" class="error-list"></ul>                     
+                        <button type="submit" name='submit'>Войти</button>
+                    </div>
+                </form>
+            </div>
+
         </header>
         <main class="main">
             <router-outlet>

@@ -1,7 +1,7 @@
-import { ComplexList } from "../models/complex/ComplexList";
-import { dataMap } from "../models/listsAndEnums/dataMap";
-import { dbTables } from "../models/listsAndEnums/dbTables";
-import {AbstractPage} from "../router";
+import { ComplexList } from "../../models/complex/ComplexList";
+import { dataMap } from "../../models/listsAndEnums/dataMap";
+import { dbTables } from "../../models/listsAndEnums/dbTables";
+import {AbstractPage} from "../../router";
 import template from './complexesPage.html';
 import templateItem from './complexesItemPage.html';
 

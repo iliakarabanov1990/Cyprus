@@ -1,8 +1,8 @@
-import { ApartmentList } from "../models/apartment/ApartmentList";
-import { ComplexList } from "../models/complex/ComplexList";
-import { dataMap } from "../models/listsAndEnums/dataMap";
-import { dbTables } from "../models/listsAndEnums/dbTables";
-import {AbstractPage} from "../router";
+import { ApartmentList } from "../../models/apartment/ApartmentList";
+import { ComplexList } from "../../models/complex/ComplexList";
+import { dataMap } from "../../models/listsAndEnums/dataMap";
+import { dbTables } from "../../models/listsAndEnums/dbTables";
+import {AbstractPage} from "../../router";
 import template from './ComplexPage.html';
 import templateItem from './apartmentItem.html';
 
@@ -15,7 +15,7 @@ export class ComplexPage extends AbstractPage {
   render(): HTMLElement | DocumentFragment {
 
     if(!this.routeState.resolvedData || !this.routeState.resolvedData.apartList){
-      return templateEl.content.cloneNode(true) as DocumentFragment; 
+      return templateEl.content.cloneNode(true) as DocumentFragment;                                                           
     }
 
     const apartments = (dataMap.get(dbTables.apartments) as ApartmentList)?.objectList.values();

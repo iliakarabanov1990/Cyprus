@@ -44,9 +44,9 @@ export class ApartmentList extends ObjectList<Apartment>{
     getByComplexId(id: idDB): Promise<boolean>{
 
         return ServiceDB.currDB.getByForeignKeys(dbTables.apartments, "complexId", [Number(id)])
-        .then((dataRows) => this.createNewItems(dataRows))
-        .then(() => true)
-        .catch(() => false);
+            .then((dataRows) => this.createNewItems(dataRows))
+            .then(() => true)
+            .catch(() => false);
     }
 
 }
