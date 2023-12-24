@@ -21,7 +21,7 @@ export function clearMessages(document: Document): void{
 
 }
 
-function setFormError(document: Document, errors: FormValidateResult<userDataValidating> | null, errName: string) : void{
+export function setFormError(document: Document, errors: FormValidateResult<userDataValidating> | null, errName: string) : void{
 
     const errEl = document.getElementById(errName + "Error");
     if(!errEl) return;  
@@ -38,7 +38,7 @@ function setFormError(document: Document, errors: FormValidateResult<userDataVal
     }  
 }
 
-function createElementByErr(err: string): HTMLElement{
+export function createElementByErr(err: string): HTMLElement{
 
     const el = document.createElement('li');
     el.textContent = err;

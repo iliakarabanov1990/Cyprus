@@ -53,7 +53,7 @@
                     </div>
                     <div class="container">
                         <label for="user-phone"><b>Телефон</b></label>
-                        <input type="tel" placeholder="Введите телефон" name="user-phone" required>   
+                        <input type="tel" placeholder="Введите телефон" name="user-phone">   
                         <ul id = "phoneError" class="error-list"></ul>             
                         <label for="user-email"><b>Электронная почта</b></label>
                         <input type="email" placeholder="Введите e-mail *необязательно" name="user-email">  
@@ -61,10 +61,11 @@
                         <label for="user-name"><b>Имя</b></label>
                         <input type="text" placeholder="Введите имя *необязательно" name="user-name">
                         <ul id = "nameError" class="error-list"></ul>
-                        <label for="user-password"><b>Пароль</b></label>
-                        <input type="password" placeholder="Введите пароль" name="user-password" required>
+                        <label id = "id-pass-label" for="user-password"><b>Пароль</b></label>
+                        <input type="password" placeholder="Введите пароль" name="user-password">
                         <ul id = "passwordError" class="error-list"></ul>                     
                         <button type="submit" name='submit'>Войти</button>
+                        <ul id = "submitError" class="error-list"></ul>
                     </div>
                 </form>
             </div>

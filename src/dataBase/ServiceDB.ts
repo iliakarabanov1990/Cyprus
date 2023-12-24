@@ -1,15 +1,19 @@
-import { DataBase } from "./DataBase";
 import { FireBaseDB } from "./FireBaseDB";
+import { BrowserLocalStorage } from './BrowserLocalStorage';
 
-export abstract class ServiceDB{
+export const currDB = new FireBaseDB('test', 'testPath');
+export const userStorage = new BrowserLocalStorage('user', 'cyprus');
+export const favPropStorage = new BrowserLocalStorage('favProp', 'cyprus');
 
-    private static _currDB: DataBase = new FireBaseDB('test', 'testPath');
+// export abstract class ServiceDB{
 
-    static async openConnection(){
-        ServiceDB._currDB.open();
-    }
+//     private static _currDB: DataBase = new FireBaseDB('test', 'testPath');
 
-    static get currDB(): DataBase{
-        return ServiceDB._currDB;
-    }
-}
+//     static async openConnection(){
+//         ServiceDB._currDB.open();
+//     }
+
+//     static get currDB(): DataBase{
+//         return ServiceDB._currDB;
+//     }
+// }

@@ -5,7 +5,8 @@ import { idDB } from "../models/interfacesAndTypes/idDB";
 
 import listLocations from './listLocations.json';
 import listComplexes from './listComplexes.json';
-import listApartment from './listApartment.json'; 
+import listApartments from './listApartment.json'; 
+import listUsers from './listUsers.json'; 
 import { tableFieldValue } from "../models/interfacesAndTypes/tableFieldValue";
 
 export class FireBaseDB extends DataBase{
@@ -14,21 +15,30 @@ export class FireBaseDB extends DataBase{
         super(name, path);
     }
 
-    async open(): Promise<void>{
-        return Promise.resolve();
+    async init(): Promise<boolean>{
+        return Promise.resolve(true);
     };
 
-    get(table: dbTables): Promise<tableDB>
+    async get(table: dbTables): Promise<tableDB>
     {
-        return Promise.resolve([{'name': 'test'}]);
+        return Promise.resolve([{}]);
     };
 
-    getByQuery(query: string): Promise<tableDB>{
-        return fetch(listApartment)
+    async getAll(): Promise<tableDB>
+    {
+        return Promise.resolve([{}]);
+    };
+
+    async writeAll(data: tableDB, table: dbTables): Promise<boolean>{
+        return Promise.resolve(true);
+    }
+
+    async getByQuery(query: string): Promise<tableDB>{
+        return fetch(listApartments)
         .then(response => response.json())
     };
 
-    getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB>{
+    async getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB>{
         
         let list: any;
 
@@ -40,7 +50,7 @@ export class FireBaseDB extends DataBase{
                 list = listComplexes;
                 break;
             case dbTables.apartments:
-                list = listApartment;
+                list = listApartments;
                 break;
             default:
                 return Promise.resolve([]);
@@ -49,7 +59,7 @@ export class FireBaseDB extends DataBase{
         return fetch(list).then(response => response.json());
     };  
 
-    getByForeignKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB>{
+    async getByForeignKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB>{
 
     let list: any;
 
@@ -61,7 +71,10 @@ export class FireBaseDB extends DataBase{
             list = listComplexes;
             break;
         case dbTables.apartments:
-            list = listApartment;
+            list = listApartments;
+            break;
+        case dbTables.users:
+            list = listUsers;
             break;
         default:
             return Promise.resolve([]);
@@ -69,14 +82,10 @@ export class FireBaseDB extends DataBase{
     
         return fetch(list)
         .then(response => response.json())
-        .then(mass => mass.filter((el: {[id: idDB]: tableFieldValue}) => foreignKeys.includes(el[fieldName])));
+        .then(mass => mass.filter((el: {[id: idDB]: tableFieldValue}) => {
+            return foreignKeys.includes(el[fieldName])
+        }));
         // return Promise.resolve(fetch(listLocations).then(response => response.json()));
     };
-
-    // abstract set(table: dbTables, tableRecords: tableRecord | tableDB): Promise<boolean>;
-
-    // abstract update(table: dbTables, tableRecords: tableRecord | tableDB): Promise<boolean>;
-
-    // abstract delete(table: dbTables, id: idDB | idDB[]): Promise<boolean>;
 
 }

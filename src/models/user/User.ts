@@ -1,4 +1,4 @@
-import { ServiceDB } from "../../dataBase/ServiceDB";
+import { currDB, userStorage } from "../../dataBase/serviceDB";
 import { ObjectDB } from "../abstracts/ObjectDB";
 import { idDB } from "../interfacesAndTypes/idDB";
 import { tableRecord } from "../interfacesAndTypes/tableRecord";
@@ -29,23 +29,37 @@ export class User extends ObjectDB {
     if(!this._email && !this._phone)
         return Promise.resolve(false);
 
-    return ServiceDB.currDB.getByForeignKeys(dbTables.apartments, this._email ? "email" : "phone", [String(this._email ? this._email : this._phone)])
+    return currDB.getByForeignKeys(dbTables.users, "id", [String(this._phone)])
         .then(dataRows => {
 
             if(!dataRows.length)
-                return false;
+                currDB.writeAll([{
+                    'id': this._phone,
+                    'email': this._email,
+                    'name': this._name,
+                    'password': this._password,
+                }], dbTables.users);
 
             const dataRow: tableRecord = dataRows[0];    
-
             this._authorized = dataRow.password === this._password; // заменить на хэширование и проверку на сервере
             if(this._authorized){  
                 if(!this._email)
                     this._email = dataRow.email as string;
                 if(!this._phone)
                     this._phone = dataRow.phone as idDB;
+                if(!this._name)
+                    this._name = dataRow.name as string;
             }
 
-            return true;
+            userStorage.writeAll([{
+                'id': this._phone,
+                'email': this._email,
+                'name': this._name,
+                'password': this._password,
+                'authorized': this._authorized,
+            }]);
+
+            return this._authorized;
 
         })
         .then(answ => answ)
@@ -62,6 +76,10 @@ export class User extends ObjectDB {
 
     get authorized(): boolean{
         return this._authorized;
+    }
+
+    set authorized(value: boolean){
+        this._authorized = value;
     }
 
 }

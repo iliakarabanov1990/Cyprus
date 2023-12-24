@@ -4,19 +4,28 @@ import { tableDB } from "../models/interfacesAndTypes/tableDB";
 import { tableFieldValue } from "../models/interfacesAndTypes/tableFieldValue";
 
 export abstract class DataBase{
-    readonly #ready: boolean;
+    protected _ready: Promise<boolean>;
     readonly #path: string; 
     readonly #name: string;
 
     constructor(name: string, path: string){
-        this.#ready = false;
+        this._ready = Promise.resolve(false);
         this.#path = path;
         this.#name = name;
+        open();
     }
 
-    abstract open(): Promise<void>;
+    open(): void{
+        this._ready = this.init();
+    };
+
+    abstract init(): Promise<boolean>;
 
     abstract get(table: dbTables, id?: idDB): Promise<tableDB>;
+
+    abstract getAll(table?: dbTables): Promise<tableDB>;
+
+    abstract writeAll(data: tableDB, table?: dbTables): Promise<boolean>;
 
     abstract getByQuery(query: string): Promise<tableDB>;
 
@@ -24,10 +33,16 @@ export abstract class DataBase{
 
     abstract getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB | undefined>;
 
-    // abstract set(table: dbTables, tableRecords: tableRecord | tableDB): Promise<boolean>;
+    get ready(): Promise<boolean>{
+        return this._ready;
+    }
 
-    // abstract update(table: dbTables, tableRecords: tableRecord | tableDB): Promise<boolean>;
+    get path(): string{
+        return this.#path;
+    }
 
-    // abstract delete(table: dbTables, id: idDB | idDB[]): Promise<boolean>;
+    get name(): string{
+        return this.#name;
+    }
 
 }

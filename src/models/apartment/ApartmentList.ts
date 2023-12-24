@@ -3,7 +3,7 @@ import { ObjectList } from "../abstracts/ObjectList";
 import { tableDB } from "../interfacesAndTypes/tableDB";
 import { tableRecord } from "../interfacesAndTypes/tableRecord";
 import { idDB } from "../interfacesAndTypes/idDB";
-import { ServiceDB } from "../../dataBase/ServiceDB";
+import { currDB } from "../../dataBase/serviceDB";
 import { dbTables } from "../listsAndEnums/dbTables";
 
 export class ApartmentList extends ObjectList<Apartment>{
@@ -43,7 +43,7 @@ export class ApartmentList extends ObjectList<Apartment>{
 
     getByComplexId(id: idDB): Promise<boolean>{
 
-        return ServiceDB.currDB.getByForeignKeys(dbTables.apartments, "complexId", [Number(id)])
+        return currDB.getByForeignKeys(dbTables.apartments, "complexId", [Number(id)])
             .then((dataRows) => this.createNewItems(dataRows))
             .then(() => true)
             .catch(() => false);
