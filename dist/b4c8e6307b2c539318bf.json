@@ -7,7 +7,7 @@
     "maxPrice": 197000, 
     "locationId": 1,
     "propertyOptions": [ "outdoor", "pool", "indoorPool" ],
-    "imgMain": "https://www.maximumemlak.com/sobstvennost-na-prodazhu/iskele?page=1&sort=hp"
+    "imgMain": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQsjPYByKfmjKVf66zaJCebYcgWf4gLyqw6BZhgDidZX2nQtngQ"
   },
   {
     "id": 2,
@@ -17,7 +17,7 @@
     "maxPrice": 187000,
     "locationId": 2,
     "propertyOptions": [ "videoSurveillance", "pool", "indoorPool" ],
-    "imgMain": "https://www.maximumemlak.com/sobstvennost-na-prodazhu/iskele?page=1&sort=hp"
+    "imgMain": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQsjPYByKfmjKVf66zaJCebYcgWf4gLyqw6BZhgDidZX2nQtngQ"
   },
   {
     "id": 3,
@@ -27,7 +27,7 @@
     "maxPrice": 199000,
     "locationId": 3,
     "propertyOptions": [ "bar", "pool", "indoorPool" ],
-    "imgMain": "https://www.maximumemlak.com/sobstvennost-na-prodazhu/iskele?page=1&sort=hp"
+    "imgMain": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQsjPYByKfmjKVf66zaJCebYcgWf4gLyqw6BZhgDidZX2nQtngQ"
   },
   {
     "id": 4,
@@ -37,7 +37,7 @@
     "maxPrice": 199000,
     "locationId": 4,
     "propertyOptions": [ "restaurant", "pool", "indoorPool" ],
-    "imgMain": "https://www.maximumemlak.com/sobstvennost-na-prodazhu/iskele?page=1&sort=hp"
+    "imgMain": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQsjPYByKfmjKVf66zaJCebYcgWf4gLyqw6BZhgDidZX2nQtngQ"
   },
   {
     "id": 5,
@@ -47,7 +47,7 @@
     "maxPrice": 297000,
     "locationId": 6,
     "propertyOptions": [ "fitnessRoom", "pool", "indoorPool" ],
-    "imgMain": "https://www.maximumemlak.com/sobstvennost-na-prodazhu/iskele?page=1&sort=hp"
+    "imgMain": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQsjPYByKfmjKVf66zaJCebYcgWf4gLyqw6BZhgDidZX2nQtngQ"
   },
   {
     "id": 6,
@@ -57,7 +57,7 @@
     "maxPrice": 197000,
     "locationId": 5,
     "propertyOptions": [ "pool", "indoorPool" ],
-    "imgMain": "https://www.maximumemlak.com/sobstvennost-na-prodazhu/iskele?page=1&sort=hp"
+    "imgMain": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQsjPYByKfmjKVf66zaJCebYcgWf4gLyqw6BZhgDidZX2nQtngQ"
   },
   {
     "id": 7,
@@ -67,6 +67,6 @@
     "maxPrice": 204000,
     "locationId": 6,
     "propertyOptions": [ "pool", "indoorPool" ],
-    "imgMain": "https://www.maximumemlak.com/sobstvennost-na-prodazhu/iskele?page=1&sort=hp"
+    "imgMain": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQsjPYByKfmjKVf66zaJCebYcgWf4gLyqw6BZhgDidZX2nQtngQ"
   }
 ]

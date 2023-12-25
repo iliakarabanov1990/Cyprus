@@ -3,6 +3,7 @@ export enum dbTables {
     complexes, 
     properties,
     apartments,
+    userFavorites,
     propertyType,
     propertyOptions, 
     leads,

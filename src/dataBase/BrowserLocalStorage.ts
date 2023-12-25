@@ -16,12 +16,27 @@ export class BrowserLocalStorage extends DataBase {
   async getAll(): Promise<tableDB> {
     await this._ready;
     const data = this.extractDataFromStorage();
-    return Promise.resolve(data);
+    return Promise.resolve(data ?? []);
+  }
+
+  async getArray(): Promise<Array<idDB>> {
+    await this._ready;
+    const data = this.extractArrayFromStorage();
+    return Promise.resolve(data ?? []);
   }
 
   async writeAll(data: tableDB): Promise<boolean> {
     await this.ready;
-    const dataStorage = this.extractDataFromStorage();
+    // const dataStorage = this.extractDataFromStorage();
+
+    this.saveDataToStorage(data);
+
+    return Promise.resolve(true);
+  }
+
+  async writeArray(data: Array<idDB>): Promise<boolean> {
+    await this.ready;
+    // const dataStorage = this.extractArrayFromStorage();
 
     this.saveDataToStorage(data);
 
@@ -30,16 +45,22 @@ export class BrowserLocalStorage extends DataBase {
 
   async delete(): Promise<void> {
     await this.ready;
-    this.saveDataToStorage([{}]);
+    localStorage.removeItem(this.path + "/" + this.name);
   }
 
-  private extractDataFromStorage(): tableDB {
+  private extractDataFromStorage(): tableDB | null{
     const storageData = localStorage.getItem(this.path + "/" + this.name);
 
-    return storageData ? JSON.parse(storageData) : [{}];
+    return storageData ? JSON.parse(storageData) : null;
   }
 
-  private saveDataToStorage(data: tableDB): void {
+  private extractArrayFromStorage(): Array<idDB> | null{
+    const storageData = localStorage.getItem(this.path + "/" + this.name);
+
+    return storageData ? JSON.parse(storageData) : null;
+  }
+
+  private saveDataToStorage(data: tableDB | Array<idDB>): void {
     const jsonData = JSON.stringify(data);
     localStorage.setItem(this.path + "/" + this.name, jsonData);
   }

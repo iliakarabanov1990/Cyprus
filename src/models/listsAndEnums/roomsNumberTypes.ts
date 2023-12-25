@@ -6,7 +6,7 @@ export enum roomsNumberTypes {
     fourPlus = <any> 'fourPlus',
 }
 
-export const roomsNumberDescription = new Map<number, string>([
+export const roomsNumberDescription = new Map<roomsNumberTypes, string>([
     [roomsNumberTypes.studio, 'Студия'],
     [roomsNumberTypes.onePlusOne, '1+1'],
     [roomsNumberTypes.twoPlusOne, '2+1'],

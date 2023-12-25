@@ -28,19 +28,19 @@ export class LocationList extends ObjectList<Location>{
 
     }
 
-    getItem(id: idDB, tableRecord?: tableRecord): Location | undefined{
+    // getItem(id: idDB, tableRecord?: tableRecord): Location | undefined{
 
-        if(!id)
-            return undefined;
+    //     if(!id)
+    //         return undefined;
 
-        let obj = this.findItem(id);
+    //     let obj = this.findItem(id);
         
-        if(!obj)
-            obj = this.createNewItem(id, tableRecord);
+    //     if(!obj)
+    //         obj = this.createNewItem(id, tableRecord);
 
-        return obj;    
+    //     return obj;    
 
-    }
+    // }
 
     createNewItem(id: idDB, newItemDB?: tableRecord): Location{
         const location = new Location(id);

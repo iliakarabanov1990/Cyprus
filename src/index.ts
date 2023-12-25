@@ -1,5 +1,5 @@
 import { RedirectPath, Router } from "./router";
-import {CartPage, HistoryPage, ProductPage, HomePage, ComplexesPage, } from "./pages";
+import {CartPage, HistoryPage, ProductPage, HomePage, ComplexesPage, FavoritesPage, } from "./pages";
 import { dataMap } from "./models/listsAndEnums/dataMap";
 import { dbTables } from "./models/listsAndEnums/dbTables";
 import { ComplexPage } from "./pages/complex/ComplexPage";
@@ -12,9 +12,8 @@ import { clearMessages, createElementByErr, setFormErrors } from "./service/vali
 import { userStorage } from "./dataBase/serviceDB";
 import { idDB } from "./models/interfacesAndTypes/idDB";
 import "./styles/style.scss";
+import { ComplexList } from "./models/complex/ComplexList";
 
-// await locations.updateFromDB();
-// await complexes.updateFromDB();
 let user: User | undefined;
 const logInForm = document.forms.namedItem("log-in")!;
 const buttonLogIn = document.querySelector('.log-in button')!;
@@ -34,11 +33,16 @@ const userDataValidator = new FormValidator <userDataValidating>({
   ],
 });
 
+await dataMap.get(dbTables.locations)?.updateFromDB(dbTables.locations)
+  .then(() => dataMap.get(dbTables.complexes)?.updateFromDB(dbTables.complexes));
+
 if(userLocal.length && userLocal[0].id){
   const userRow = userLocal[0];
   user = new User(userRow.id as idDB, userRow.email as string, '', userRow.name as string);
   user.authorized = userRow.authorized as boolean;
   setVisualizationForUser(user, logInForm);
+
+  await (dataMap.get(dbTables.apartments) as ApartmentList).updateFavoriteFromLocalStorage(user);
 }
 
 logInForm.addEventListener("submit", (event) => handleLogIn(event, buttonSubmitLogIn));
@@ -74,7 +78,10 @@ const appRouter = new Router([
           .then(() =>
             dataMap.get(dbTables.complexes)?.updateFromDB(dbTables.complexes)
           )
-          .then(() => true)
+          .then(() => {
+            const complexList = dataMap.get(dbTables.complexes) as ComplexList;
+            return Array.from(complexList.objectList.values());
+          })
           .catch(() => false),
       // complexesList: () => fetch(listPath).then(response => response.json()),
     },
@@ -85,11 +92,36 @@ const appRouter = new Router([
     page: ComplexPage,
     resolve: {
       apartList: (state) => {
+        const complexId = Number(state.params.complexId);
         const apartList = dataMap.get(dbTables.apartments) as ApartmentList;
-        return apartList.getByComplexId(state.params.complexId);
+        return apartList.updateByComplexId(state.params.complexId).then(()=>
+            Array.from(apartList.objectList.values()).filter(el => el.complex!.id === complexId))
       },
+      user: ()=>(user),
       // complexesList: () => fetch(listPath).then(response => response.json()),
     },
+  },
+
+  {
+    path: "favorites",
+    page: FavoritesPage,
+    resolve: {
+      apartList: () => {
+        const apartList = dataMap.get(dbTables.apartments) as ApartmentList;
+        return apartList.updateFavoriteFromLocalStorage(user!).then(()=>
+            Array.from(apartList.objectList.values()).filter(el => apartList.favoriteList.has(el.id)))
+      },
+      user: ()=>(user),
+      // complexesList: () => fetch(listPath).then(response => response.json()),
+    },
+    guards: [
+      () => {
+        if(user!.authorized)
+          return true;
+        return new Promise<RedirectPath>((resolve) => {
+            setTimeout(() => resolve(new RedirectPath("/")), 2_000);
+        })},
+    ],
   },
 
   {
@@ -158,8 +190,10 @@ async function handleLogIn(event: SubmitEvent, buttonSubmitLogIn: Element): Prom
 
     await user.authorize().then(() => setVisualizationForUser(user, logInForm));
 
-    if(user.authorized)
+    if(user.authorized){
       document.getElementById('id-log-in')!.style.display='none';
+      setTimeout(()=>{location.reload()},100);
+    }
     else
       document.getElementById('submitError')!.appendChild(createElementByErr('Вход не выполнен'));
   }
@@ -174,8 +208,7 @@ async function handleLogIn(event: SubmitEvent, buttonSubmitLogIn: Element): Prom
     }]);
 
     setVisualizationForUser(user, logInForm);
+    setTimeout(()=>{location.reload()},100);
   }
-
-  // logInForm.reset();
-
+  await (dataMap.get(dbTables.apartments) as ApartmentList).updateFavoriteFromLocalStorage(user!);
 }

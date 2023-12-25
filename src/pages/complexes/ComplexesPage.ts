@@ -4,6 +4,7 @@ import { dbTables } from "../../models/listsAndEnums/dbTables";
 import {AbstractPage} from "../../router";
 import template from './complexesPage.html';
 import templateItem from './complexesItemPage.html';
+import { Complex } from "../../models/complex/Complex";
 
 const templateEl = document.createElement('template');
 const templateItemEl = document.createElement('template');
@@ -24,11 +25,11 @@ export class ComplexesPage extends AbstractPage {
       return templateEl.content.cloneNode(true) as DocumentFragment; 
     }
     
-    const complexes = (dataMap.get(dbTables.complexes) as ComplexList)?.objectList.values();
-    if(!complexes)
-      return templateEl.content.cloneNode(true) as DocumentFragment;
+    // const complexes = (dataMap.get(dbTables.complexes) as ComplexList)?.objectList.values();
+    // if(!complexes)
+    //   return templateEl.content.cloneNode(true) as DocumentFragment;
 
-    const complexSections: DocumentFragment[] = Array.from(complexes).map((el) => {
+    const complexSections: DocumentFragment[] = (this.routeState.resolvedData.complexList as Complex[]).map((el) => {
 
       const clone = templateItemEl.content.cloneNode(true) as DocumentFragment;
       const imgEl = clone.querySelector('.complex-box__img')!;

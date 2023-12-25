@@ -9,18 +9,25 @@ export abstract class ResidentialProperty extends Property{
     
     protected _roomsNumber: roomsNumberTypes | undefined;  
     
-    protected _commissioningDate: Date | undefined;
+    protected _commissioningDate: string;
+
+    protected _square: number;
 
     constructor(id: idDB){
         super(id);      
+        this._commissioningDate = '';
+        this._square = 0;
     }
 
     get roomsNumber(): roomsNumberTypes | undefined{
         return this._roomsNumber;
     }
 
-    get commissioningDate(): Date | undefined{
+    get commissioningDate(): string{
         return this._commissioningDate;
     }
-    
+
+    get square(): number{
+        return this._square;
+    }
 }

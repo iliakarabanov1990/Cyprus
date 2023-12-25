@@ -38,7 +38,7 @@
                     <ul class="navigation">
                         <li><a is="router-link" href="/">Главная</a></li>
                         <li><a is="router-link" href="/complexes">Каталог</a></li>
-                        <li><a is="router-link" href="/history">Отмеченные</a></li>
+                        <li><a is="router-link" href="/favorites">Отмеченные</a></li>
                     </ul>
                 </nav>
                 <div class="log-in">
@@ -63,20 +63,22 @@
                         <ul id = "nameError" class="error-list"></ul>
                         <label id = "id-pass-label" for="user-password"><b>Пароль</b></label>
                         <input type="password" placeholder="Введите пароль" name="user-password">
-                        <ul id = "passwordError" class="error-list"></ul>                     
-                        <button type="submit" name='submit'>Войти</button>
-                        <ul id = "submitError" class="error-list"></ul>
+                        <ul id = "passwordError" class="error-list"></ul>    
+                        <div>                 
+                            <button type="submit" name='submit'>Войти</button>
+                            <ul id = "submitError" class="error-list"></ul>
+                        </div>            
                     </div>
                 </form>
             </div>
 
         </header>
-        <main class="main">
+        <main>
             <router-outlet>
                 <div style="position: absolute; background-color: red; color: white; font-size: 3em; inset: 0;">LOADING</div>
             </router-outlet>
         </main>
-        <footer class="footer">
+        <footer>
             footer
         </footer>
     </div>

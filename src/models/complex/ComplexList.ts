@@ -10,15 +10,6 @@ export class ComplexList extends ObjectList<Complex>{
         super();
     }
 
-    // async updateFromDB(): Promise<boolean>{
-
-    //     const newItemsDB = await this.checkNewItems(Complex.tableName);
-    //     if (newItemsDB)
-    //         this.createNewItems(newItemsDB);
-
-    //     return Promise.resolve(true);
-    // }
-
     createNewItems(newItemsDB: tableDB): void{
 
         newItemsDB.forEach(element => {
@@ -26,15 +17,15 @@ export class ComplexList extends ObjectList<Complex>{
         });    
     }
 
-    getItem(id: idDB, tableRecord?: tableRecord): Complex{
+    // getItem(id: idDB, tableRecord?: tableRecord): Complex{
 
-        let obj = this.findItem(id);
+    //     let obj = this.findItem(id);
         
-        if(!obj)
-            obj = this.createNewItem(id, tableRecord);
+    //     if(!obj)
+    //         obj = this.createNewItem(id, tableRecord);
 
-        return obj;    
-    }
+    //     return obj;    
+    // }
 
     createNewItem(id: idDB, newItemDB?: tableRecord): Complex{
         const complex = new Complex(id);

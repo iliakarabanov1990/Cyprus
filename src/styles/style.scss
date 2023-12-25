@@ -1,13 +1,17 @@
 @import "reset.css";
 @import "formStyle";
 
+$grey-color: #514840;
+$brown-color: #8D5C34;
+$white-color: white;
+$border-radius: 8px;
 $base-font-size: 16px;
 $small-font-size: .8rem;
 $medium-font-size: 1rem;
 $large-font-size: 1.5rem;
 $small-header-font-size: 1rem;
-$medium-header-font-size: 1.5rem;
-$large-header-font-size: 3rem;
+$medium-header-font-size: 1.3rem;
+$large-header-font-size: 2.5rem;
 
 @mixin flex-box($direction: column, $justify-content: space-between, $align-items: center, $gap: 2vw, $flex-wrap: nowrap){
   display: flex;
@@ -18,69 +22,119 @@ $large-header-font-size: 3rem;
   flex-wrap: $flex-wrap;
 }
 
-html {
-  font-size: $base-font-size;
+@mixin wrapper-margin($margin-v: auto, $margin-h: 5vw){
+  margin: $margin-v $margin-h;
 }
 
-h1 {
+html{
+  font-size: $base-font-size;
+  // overflow:  hidden;
+}
+
+h1{
   font-size: $large-header-font-size; 
   font-weight: bolder;
 }
 
-h2 {
-  font-size: --medium; 
+h2{
+  font-size: $medium-header-font-size; 
   font-weight: bold;
 }
 
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
+button{
+  background-color: $brown-color;
+  color: $white-color;
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: $border-radius;
+
+  &:hover{
+    opacity: 0.8;
+  }
 }
 
-.header {
+img{
+  height: 100%;
+  width: 100%;
+}
+
+.img-icon{
+  width: max(1.5vw, 20px);
+  height: max(1.5vw, 20px); 
+}
+
+.img-round-border{
+  border-radius: $border-radius;
+}
+
+.smallText{
+  font-size: $small-font-size;
+  color: $grey-color;
+}
+
+.text-shadow{
+  span{
+    background-color: $grey-color;
+    opacity: 0.8; 
+    color: $white-color;
+    border-radius: $border-radius;
+    padding: 0 10px;
+  }
+}
+
+.header{
+  @include flex-box(row, space-between, center, 20vw);
   flex: 0 0;
   margin: 1vh 2vw;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20vw;
+  // display: flex;
+  // justify-content: space-between;
+  // align-items: center;
+  // gap: 20vw;
+  .header-left{
+    @include flex-box(row);
+    .logo{
+      width: max(6vw, 50px);
+      height: max(3vw, 25px);;
+      object-fit: cover;
+    }
+  } 
+  .header-right{
+    @include flex-box(row, right, center, 2vw, wrap);
+    .navigation{
+      @include flex-box(row, right, center, 1vw, wrap);
+      font-size: $medium-font-size;
+    }
+  }
 }
 
-.header-left{
-  @include flex-box(row);
+main{
+  flex: auto;
 }
 
-.header-right{
-  @include flex-box(row, right, center, 2vw, wrap);
+footer{
+  height: 40px;
 }
 
 .contacts{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2vw;
-  // font-size: 16px;
-}
-
-.contacts__phone{
-  @media (max-width: 768px) {
-    font-size:0;
+  @include flex-box(row);
+  // display: flex;
+  // justify-content: space-between;
+  // align-items: center;
+  // gap: 2vw;
+  .contacts__phone{
+    @media (max-width: 768px) {
+      font-size: 0;
+    }
+    font-size: $medium-font-size;
   }
-  font-size: 16px;
-}
+} 
 
-.navigation{
-  @include flex-box(row, right, center, 1vw, wrap);
-  font-size: 16px;
-}
-
-.log-in{
-  // margin-left: 2vw;
-}
-
-.main {
-    flex: auto;
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 .wrapper-first-page{
@@ -93,62 +147,101 @@ h2 {
   height: calc(100vh - 50px);
 }
 
-.wrapper-first-page span{
-  line-height: 1.2;
-}
-
 .main-info{
-  margin: 5vw 5vw;
   text-align: center;
-  color: white;
-  // font-size: min(7vw, 3rem);
-}
-
-.main-info span{
-  background-color: #BB763E;
+  color: $white-color;
+  span{
+    line-height: calc($large-header-font-size*1.2);
+  }
+  h1{
+    padding-top: 20vh;
+  }
+  div{
+    @include flex-box(row, center, center, 2vw, wrap);
+    margin: 5vh 15vw;
+    button{
+      max-width: 300px;
+    }
+  }
 }
 
 .additional-info{
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.additional-info{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2vw;
-}
-
-.apartment-box{
-  @include flex-box(row, left, top, 2vw);
-}
-
-footer {
-    height: 40px;
-}
-
-.logo{
-  width: max(6vw, 50px);
-  height: max(3vw, 25px);;
-  object-fit: cover;
-}
-
-.img-icon{
-  width: max(1.5vw, 20px);
-  height: max(1.5vw, 20px); 
-}
-
-img {
-  height: 100%;
-  width: 100%;
-  // width: max(15vw, 200px);
-  // height: max(15vw, 200px); 
+  @include flex-box(row, space-around, center, 2vw, wrap);
+  // display: flex;
+  // justify-content: space-between;
+  // align-items: center;
+  // gap: 2vw;
 }
 
 .wrapper-complexes{
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, 300px);
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 350px);
+  @include wrapper-margin();
+  div{
+    margin: 5px auto;
+  }
+  .complex-box__description div p{
+    margin-left: 1vw;
+  }
+}
 
+.wrapper-complex{
+    @include flex-box(column, center, center, 2vw);
+    @include wrapper-margin();
+    // .apartment-box{
+    //   padding: 5vw;
+    // }
+    .apartment-box__details{
+      @include flex-box(row, left, top, 2vw, wrap);
+      box-shadow: 1px 5px 10px 0.2px $grey-color;
+      border-radius: $border-radius;
+      padding: max(2vw, 10px);
+      line-height: $large-font-size;
+
+      span{
+        white-space: nowrap;
+      }
+      h2{
+        @include flex-box(row, center, center, 1.5vw, wrap);
+        // align-items: center;
+
+      }
+      div{
+        @include flex-box(row, start, center, 1vw, wrap);
+        span{
+          border: solid;
+          border-radius: $border-radius;
+          padding: 2px 5px;
+        }
+      }
+
+      p:first-of-type{
+        @include flex-box(row, start, center, 1vw, wrap);
+      }
+
+      &:nth-child(1){
+        // flex-basis: 20%;
+        align-items: center;
+      }
+      // &:nth-child(2){
+      //   flex-basis: 20%;
+      //   align-items: end;
+      // }
+      // &:nth-child(3){
+      //   flex-basis: 20%;
+      // }
+      // &:nth-child(4){
+      //   flex-basis: 40%;
+      // }
+      .apartment-box__propertyOptions span{
+        // margin: auto .5vw;
+        padding: 2px 5px;
+      }
+      .apartment-box__like{
+        width: 70px;
+        padding: 5px 5px;
+      }
+    }
 }

@@ -15,8 +15,8 @@ export abstract class ObjectList<T extends ObjectDB> {
     }
 
     abstract createNewItems(newItemsDB: tableDB): void;
-    abstract createNewItem(id: idDB, newItemsDB: tableRecord): ObjectDB;
-    abstract getItem(id: idDB, tableRecord?: tableRecord): T | undefined;
+    abstract createNewItem(id: idDB, newItemsDB: tableRecord): T;
+    // abstract getItem(id: idDB, tableRecord?: tableRecord): T | undefined;
 
     async checkNewItems(tableName: dbTables): Promise<tableDB | undefined>{
 
@@ -37,6 +37,15 @@ export abstract class ObjectList<T extends ObjectDB> {
 
     findItem(id: idDB): T | undefined{
         return this._objectList.get(id);
+    }
+    getItem(id: idDB, tableRecord?: tableRecord): T{
+
+        let obj = this.findItem(id);
+        
+        if(!obj)
+            obj = this.createNewItem(id, tableRecord!);
+
+        return obj;    
     }
 
     get objectList(): Map<idDB, T>{

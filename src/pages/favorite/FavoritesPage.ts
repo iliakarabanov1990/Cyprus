@@ -1,21 +1,21 @@
 import { Apartment } from "../../models/apartment/Apartment";
-import { ApartmentList } from "../../models/apartment/ApartmentList";
 import { ComplexList } from "../../models/complex/ComplexList";
 import { dataMap } from "../../models/listsAndEnums/dataMap";
 import { dbTables } from "../../models/listsAndEnums/dbTables";
 import { propertyOptionsDescription } from "../../models/listsAndEnums/propertyOptions";
 import { roomsNumberDescription } from "../../models/listsAndEnums/roomsNumberTypes";
-import { User } from "../../models/user/User";
 import {AbstractPage} from "../../router";
-import template from './ComplexPage.html';
+import template from './favoritesPage.html';
 import templateItem from './apartmentItem.html';
+import { ApartmentList } from "../../models/apartment/ApartmentList";
+import { User } from "../../models/user/User";
 
 const templateEl = document.createElement('template');
 const templateItemEl = document.createElement('template');
 templateEl.innerHTML = template;
 templateItemEl.innerHTML = templateItem;
 
-export class ComplexPage extends AbstractPage {
+export class FavoritesPage extends AbstractPage {
   render(): HTMLElement | DocumentFragment {
 
     const nameOfComplex = (dataMap.get(dbTables.complexes) as ComplexList)?.objectList.get(Number(this.routeState.params.complexId))?.name;
@@ -36,9 +36,6 @@ export class ComplexPage extends AbstractPage {
 
       buttonLike.textContent = (dataMap.get(dbTables.apartments) as ApartmentList).favoriteList.has(el.id) ? "Снять отметку" : "Отметить";
 
-      if(!(this.routeState!.resolvedData!.user as User).authorized)
-        buttonLike.setAttribute('disabled', '');
-
       buttonLike.addEventListener('click', (event) => {
         const apartId = Number((event.target as HTMLElement).dataset.apartId);
         const isFavorite = (dataMap.get(dbTables.apartments) as ApartmentList).favoriteList.has(el.id);
@@ -46,8 +43,6 @@ export class ComplexPage extends AbstractPage {
         (dataMap.get(dbTables.apartments) as ApartmentList).setRemoveApartmentAsFavorite(this.routeState!.resolvedData!.user as User, apartId, !isFavorite)
       });
 
-      // const imgEl = cloneTemplateItemEl.querySelector('.apartment-box__img')!;
-      // const nameEl = cloneTemplateItemEl.querySelector('.apartment-box__name')!;
       const roomsNumberEl = cloneTemplateItemEl.querySelector('.apartment-box__roomsNumber')!;
       const propertySquare = cloneTemplateItemEl.querySelector('.apartment-box__propertySquare')!;
       const priceEl = cloneTemplateItemEl.querySelector('.apartment-box__price')!;
@@ -74,6 +69,8 @@ export class ComplexPage extends AbstractPage {
 
       descriptionEl.textContent = el.description;
       
+      
+      
       return cloneTemplateItemEl; 
     });
 
@@ -81,7 +78,7 @@ export class ComplexPage extends AbstractPage {
     const cloneTemplateEl = templateEl.content.cloneNode(true) as DocumentFragment;
     const templEl = cloneTemplateEl.querySelector('.wrapper-complex')!;
     const templHeader = document.createElement("h1");
-    templHeader.textContent = nameOfComplex!;
+    templHeader.textContent = 'Отмеченные объекты недвижимости'!;
     templEl.appendChild(templHeader);
     templEl.append(...complexSections);
     return cloneTemplateEl as DocumentFragment;
