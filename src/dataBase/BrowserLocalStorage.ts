@@ -13,50 +13,26 @@ export class BrowserLocalStorage extends DataBase {
     return Promise.resolve(true);
   }
 
-  async getAll(): Promise<tableDB> {
+  async get(): Promise<tableDB> {
     await this._ready;
     const data = this.extractDataFromStorage();
     return Promise.resolve(data ?? []);
   }
 
-  async getArray(): Promise<Array<idDB>> {
-    await this._ready;
-    const data = this.extractArrayFromStorage();
-    return Promise.resolve(data ?? []);
-  }
-
-  async writeAll(data: tableDB): Promise<boolean> {
+  async write(data: tableDB): Promise<boolean> {
     await this.ready;
-    // const dataStorage = this.extractDataFromStorage();
-
     this.saveDataToStorage(data);
-
     return Promise.resolve(true);
   }
 
-  async writeArray(data: Array<idDB>): Promise<boolean> {
-    await this.ready;
-    // const dataStorage = this.extractArrayFromStorage();
-
-    this.saveDataToStorage(data);
-
-    return Promise.resolve(true);
-  }
-
-  async delete(): Promise<void> {
+  async delete(): Promise<boolean> {
     await this.ready;
     localStorage.removeItem(this.path + "/" + this.name);
+    return Promise.resolve(true);
   }
 
   private extractDataFromStorage(): tableDB | null{
     const storageData = localStorage.getItem(this.path + "/" + this.name);
-
-    return storageData ? JSON.parse(storageData) : null;
-  }
-
-  private extractArrayFromStorage(): Array<idDB> | null{
-    const storageData = localStorage.getItem(this.path + "/" + this.name);
-
     return storageData ? JSON.parse(storageData) : null;
   }
 
@@ -65,19 +41,45 @@ export class BrowserLocalStorage extends DataBase {
     localStorage.setItem(this.path + "/" + this.name, jsonData);
   }
 
-  get(table: dbTables): Promise<tableDB> {
-    return Promise.resolve([{}]);
-  }
+  // async getArray(): Promise<Array<idDB>> {
+  //   await this._ready;
+  //   const data = this.extractArrayFromStorage();
+  //   return Promise.resolve(data ?? []);
+  // }
 
-  getByQuery(query: string): Promise<tableDB> {
-    return Promise.resolve([{}]);
-  }
+  // async writeArray(data: Array<idDB>): Promise<boolean> {
+  //   await this.ready;
 
-  getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB> {
-    return Promise.resolve([{}]);
-  }
+  //   this.saveDataToStorage(data);
 
-  getByForeignKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB> {
-    return Promise.resolve([{}]);
-  }
+  //   return Promise.resolve(true);
+  // }
+
+
+
+
+
+  // private extractArrayFromStorage(): Array<idDB> | null{
+  //   const storageData = localStorage.getItem(this.path + "/" + this.name);
+
+  //   return storageData ? JSON.parse(storageData) : null;
+  // }
+
+
+
+  // get(table: dbTables, id: idDB): Promise<tableDB> {
+  //   return Promise.resolve([{}]);
+  // }
+
+  // getByQuery(query: string): Promise<tableDB> {
+  //   return Promise.resolve([{}]);
+  // }
+
+  // getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB> {
+  //   return Promise.resolve([{}]);
+  // }
+
+  // getByKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB> {
+  //   return Promise.resolve([{}]);
+  // }
 }

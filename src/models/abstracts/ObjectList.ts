@@ -38,11 +38,11 @@ export abstract class ObjectList<T extends ObjectDB> {
     findItem(id: idDB): T | undefined{
         return this._objectList.get(id);
     }
-    getItem(id: idDB, tableRecord?: tableRecord): T{
+    getItem(id: idDB, tableRecord?: tableRecord): T | undefined{
 
         let obj = this.findItem(id);
         
-        if(!obj)
+        if(!obj && tableRecord)
             obj = this.createNewItem(id, tableRecord!);
 
         return obj;    

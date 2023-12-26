@@ -13,10 +13,6 @@ export class Location extends ObjectDB {
     this._coordinates = { latitude: "", longitude: "" };
   }
 
-  async fillFromDB(): Promise<boolean> {
-    return Promise.resolve(true);
-  }
-
   fillFromData(record: tableRecord): void {
 
     super.fillFromData(record);
@@ -28,6 +24,10 @@ export class Location extends ObjectDB {
   get coordinates(): Coordinates {
     return this._coordinates;
   }
+
+    // async fillFromDB(): Promise<boolean> {
+  //   return Promise.resolve(true);
+  // }
 
   // constructor(coordinates: Coordinates, name: string, description: string, id: idDB, tableName: dbTables){
   //     super(tableName, id);

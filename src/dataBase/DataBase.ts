@@ -20,18 +20,15 @@ export abstract class DataBase{
     };
 
     abstract init(): Promise<boolean>;
+    abstract get(table?: dbTables,  id?: idDB): Promise<tableDB>;
+    abstract write(data: tableDB, table?: dbTables): Promise<boolean>;
+    abstract delete(table?: dbTables,  id?: idDB): Promise<boolean>;
 
-    abstract get(table: dbTables, id?: idDB): Promise<tableDB>;
+    // abstract getByQuery(query: string): Promise<tableDB>;
 
-    abstract getAll(table?: dbTables): Promise<tableDB>;
+    // abstract getByKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB>;
 
-    abstract writeAll(data: tableDB, table?: dbTables): Promise<boolean>;
-
-    abstract getByQuery(query: string): Promise<tableDB>;
-
-    abstract getByForeignKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB>;
-
-    abstract getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB | undefined>;
+    // abstract getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB | undefined>;
 
     get ready(): Promise<boolean>{
         return this._ready;

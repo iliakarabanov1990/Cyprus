@@ -12,8 +12,6 @@ export abstract class ObjectDB{
                     protected _imgMain: string = ''){
     }
 
-    abstract fillFromDB(): Promise<boolean>;
-
     fillFromData(record: tableRecord): void{
         this._name = record.name as string;
         this._description = record.description as string;

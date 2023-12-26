@@ -4,7 +4,7 @@ import { Location } from "../location/Location";
 import { propertyTypes } from "../listsAndEnums/propertyTypes";
 import { propertyOptions } from "../listsAndEnums/propertyOptions";
 import { tableRecord } from "../interfacesAndTypes/tableRecord";
-import { dataMap } from "../listsAndEnums/dataMap";
+import { locations } from "../listsAndEnums/lists";
 import { dbTables } from "../listsAndEnums/dbTables";
 
 export abstract class Property extends ObjectDB{
@@ -27,7 +27,7 @@ export abstract class Property extends ObjectDB{
         super.fillFromData(record);
 
         this._propertyOptions = (record.propertyOptions as unknown[]).map(el => el as propertyOptions);
-        this._location = dataMap.get(dbTables.locations)?.getItem(record.locationId as number) as Location;
+        this._location = locations.getItem(record.locationId as number) as Location;
     };
 
     get location(): Location | undefined{

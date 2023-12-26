@@ -1,9 +1,8 @@
 import { RedirectPath, Router } from "./router";
-import {CartPage, HistoryPage, ProductPage, HomePage, ComplexesPage, FavoritesPage, } from "./pages";
-import { dataMap } from "./models/listsAndEnums/dataMap";
+import { HomePage, ComplexesPage, FavoritesPage, } from "./pages";
+import { complexes, apartments, locations } from "./models/listsAndEnums/lists";
 import { dbTables } from "./models/listsAndEnums/dbTables";
 import { ComplexPage } from "./pages/complex/ComplexPage";
-import { ApartmentList } from "./models/apartment/ApartmentList";
 import { User } from "./models/user/User";
 import { userDataValidating } from "./service/validator/userDataValidating";
 import { FormValidator } from "./service/validator/FormValidator";
@@ -12,13 +11,17 @@ import { clearMessages, createElementByErr, setFormErrors } from "./service/vali
 import { userStorage } from "./dataBase/serviceDB";
 import { idDB } from "./models/interfacesAndTypes/idDB";
 import "./styles/style.scss";
-import { ComplexList } from "./models/complex/ComplexList";
+
+await locations.updateFromDB(dbTables.locations)
+  .then(() => complexes.updateFromDB(dbTables.complexes));
+
+const logInForm = document.forms.namedItem("log-in")!;
+const buttonLogIn = document.querySelector('.log-in button')! as HTMLElement;
+const buttonSubmitLogIn = logInForm.querySelector('button[name="submit"]')! as HTMLElement;
+const idPassLabel = document.getElementById('id-pass-label') as HTMLElement;
 
 let user: User | undefined;
-const logInForm = document.forms.namedItem("log-in")!;
-const buttonLogIn = document.querySelector('.log-in button')!;
-const buttonSubmitLogIn = logInForm.querySelector('button[name="submit"]')!;
-const userLocal = await userStorage.getAll();
+const userLocal = await userStorage.get();
 const userDataValidator = new FormValidator <userDataValidating>({
   name: [],
   email: [
@@ -33,57 +36,35 @@ const userDataValidator = new FormValidator <userDataValidating>({
   ],
 });
 
-await dataMap.get(dbTables.locations)?.updateFromDB(dbTables.locations)
-  .then(() => dataMap.get(dbTables.complexes)?.updateFromDB(dbTables.complexes));
 
 if(userLocal.length && userLocal[0].id){
   const userRow = userLocal[0];
   user = new User(userRow.id as idDB, userRow.email as string, '', userRow.name as string);
   user.authorized = userRow.authorized as boolean;
-  setVisualizationForUser(user, logInForm);
-
-  await (dataMap.get(dbTables.apartments) as ApartmentList).updateFavoriteFromLocalStorage(user);
+  setVisualizationForUser(user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel);
+  await apartments.updateFavoriteFromLocalStorage(user);
 }
 
-logInForm.addEventListener("submit", (event) => handleLogIn(event, buttonSubmitLogIn));
+logInForm.addEventListener("submit", (event) => handleLogIn(event, user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel));
 
 const appRouter = new Router([
   {
     path: "",
     page: HomePage,
-    // redirectTo: '/products'
-  },
-  {
-    path: "cart",
-    page: CartPage,
-  },
-  {
-    path: "history",
-    page: HistoryPage,
-    guards: [
-      () =>
-        new Promise<RedirectPath>((resolve) => {
-          setTimeout(() => resolve(new RedirectPath("/")), 2_000);
-        }),
-    ],
   },
   {
     path: "complexes",
     page: ComplexesPage,
     resolve: {
       complexList: () =>
-        dataMap
-          .get(dbTables.locations)
-          ?.updateFromDB(dbTables.locations)
+        locations.updateFromDB(dbTables.locations)
           .then(() =>
-            dataMap.get(dbTables.complexes)?.updateFromDB(dbTables.complexes)
+            complexes.updateFromDB(dbTables.complexes)
           )
           .then(() => {
-            const complexList = dataMap.get(dbTables.complexes) as ComplexList;
-            return Array.from(complexList.objectList.values());
+            return Array.from(complexes.objectList.values());
           })
           .catch(() => false),
-      // complexesList: () => fetch(listPath).then(response => response.json()),
     },
   },
 
@@ -93,12 +74,10 @@ const appRouter = new Router([
     resolve: {
       apartList: (state) => {
         const complexId = Number(state.params.complexId);
-        const apartList = dataMap.get(dbTables.apartments) as ApartmentList;
-        return apartList.updateByComplexId(state.params.complexId).then(()=>
-            Array.from(apartList.objectList.values()).filter(el => el.complex!.id === complexId))
+        return apartments.updateByComplexId(complexId).then(()=>
+            Array.from(apartments.objectList.values()).filter(el => el.complex!.id === complexId))
       },
       user: ()=>(user),
-      // complexesList: () => fetch(listPath).then(response => response.json()),
     },
   },
 
@@ -107,12 +86,10 @@ const appRouter = new Router([
     page: FavoritesPage,
     resolve: {
       apartList: () => {
-        const apartList = dataMap.get(dbTables.apartments) as ApartmentList;
-        return apartList.updateFavoriteFromLocalStorage(user!).then(()=>
-            Array.from(apartList.objectList.values()).filter(el => apartList.favoriteList.has(el.id)))
+        return apartments.updateFavoriteFromLocalStorage(user!).then(()=>
+            Array.from(apartments.objectList.values()).filter(el => apartments.favoriteList.has(el.id)))
       },
       user: ()=>(user),
-      // complexesList: () => fetch(listPath).then(response => response.json()),
     },
     guards: [
       () => {
@@ -123,26 +100,11 @@ const appRouter = new Router([
         })},
     ],
   },
-
-  {
-    path: "products/:productId",
-    page: ProductPage,
-  },
 ]);
 
 appRouter.start();
 
-function setVisualizationForUser(user: User | undefined, logInForm: HTMLFormElement){
-
-  // if(!user) return;
-
-  // new FormData(logInForm).set("user-name", 'phone');
-  // new FormData(logInForm).set("user-phone", 'phone');
-  // new FormData(logInForm).set("user-email", 'email');
-  // new FormData(logInForm).set("user-password", '');
-
-  
-  // logInForm.querySelector('input[name="user-password"]')!.textContent = '';
+function setVisualizationForUser(user: User | undefined, logInForm: HTMLFormElement, buttonLogIn: HTMLElement, buttonSubmitLogIn: HTMLElement, idPassLabel: HTMLElement){
 
   logInForm.querySelector('input[name="user-name"]')!.setAttribute('value', user!.name);
   logInForm.querySelector('input[name="user-phone"]')!.setAttribute('value', user!.phone as string);
@@ -154,7 +116,7 @@ function setVisualizationForUser(user: User | undefined, logInForm: HTMLFormElem
     logInForm.querySelector('input[name="user-phone"]')!.setAttribute('readOnly', 'true');
     logInForm.querySelector('input[name="user-phone"]')!.setAttribute('readOnly', 'true');
     logInForm.querySelector('input[name="user-password"]')!.setAttribute('type', 'hidden');
-    document.getElementById('id-pass-label')!.style.display = 'none'; 
+    idPassLabel!.style.display = 'none'; 
   }
   else{
     buttonLogIn.textContent = "Войти";  
@@ -163,18 +125,17 @@ function setVisualizationForUser(user: User | undefined, logInForm: HTMLFormElem
     logInForm.querySelector('input[name="user-phone"]')!.removeAttribute('readOnly');
     logInForm.querySelector('input[name="user-password"]')!.setAttribute('value', '');
     logInForm.querySelector('input[name="user-password"]')!.setAttribute('type', 'password');
-    // document.getElementById('id-pass-label')!.style.display = 'inline'; 
   }
 }
 
-async function handleLogIn(event: SubmitEvent, buttonSubmitLogIn: Element): Promise<void>{
+async function handleLogIn(event: SubmitEvent, user: User | undefined, logInForm: HTMLFormElement, buttonLogIn: HTMLElement, buttonSubmitLogIn: HTMLElement, idPassLabel: HTMLElement): Promise<void>{
   
   event.preventDefault();
 
   if(buttonSubmitLogIn.textContent === "Войти"){
 
     const userData: userDataValidating = {
-      name: String(new FormData(logInForm).get("user-password")).trim(),
+      name: String(new FormData(logInForm).get("user-name")).trim(),
       phone: String(new FormData(logInForm).get("user-phone")).trim(),
       email: String(new FormData(logInForm).get("user-email")).trim(),
       password: String(new FormData(logInForm).get("user-password")).trim(),  
@@ -188,18 +149,17 @@ async function handleLogIn(event: SubmitEvent, buttonSubmitLogIn: Element): Prom
 
     user = new User(userData.phone, userData.email, userData.password, userData.name);
 
-    await user.authorize().then(() => setVisualizationForUser(user, logInForm));
+    await user.authorize().then(() => setVisualizationForUser(user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel));
 
-    if(user.authorized){
-      document.getElementById('id-log-in')!.style.display='none';
+    if(user.authorized)
+      // document.getElementById('id-log-in')!.style.display='none';
       setTimeout(()=>{location.reload()},100);
-    }
     else
       document.getElementById('submitError')!.appendChild(createElementByErr('Вход не выполнен'));
   }
   else{ 
     user!.authorized = false;
-    userStorage.writeAll([{
+    userStorage.write([{
       'id': user!.phone,
       'email': user!.email,
       'name': user!.name,
@@ -207,8 +167,9 @@ async function handleLogIn(event: SubmitEvent, buttonSubmitLogIn: Element): Prom
       'authorized': user!.authorized
     }]);
 
-    setVisualizationForUser(user, logInForm);
+    setVisualizationForUser(user, logInForm, buttonLogIn as HTMLElement, buttonSubmitLogIn as HTMLElement, idPassLabel);
     setTimeout(()=>{location.reload()},100);
   }
-  await (dataMap.get(dbTables.apartments) as ApartmentList).updateFavoriteFromLocalStorage(user!);
+  if(user)
+    await apartments.updateFavoriteFromLocalStorage(user);
 }

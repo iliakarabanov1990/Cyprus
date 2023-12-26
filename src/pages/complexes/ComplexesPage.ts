@@ -1,6 +1,3 @@
-import { ComplexList } from "../../models/complex/ComplexList";
-import { dataMap } from "../../models/listsAndEnums/dataMap";
-import { dbTables } from "../../models/listsAndEnums/dbTables";
 import {AbstractPage} from "../../router";
 import template from './complexesPage.html';
 import templateItem from './complexesItemPage.html';
@@ -10,7 +7,6 @@ const templateEl = document.createElement('template');
 const templateItemEl = document.createElement('template');
 templateEl.innerHTML = template;
 templateItemEl.innerHTML = templateItem;
-
 
 interface ProductInfo {
   id: number;

@@ -2,7 +2,6 @@ import { DataBase } from "./DataBase";
 import { dbTables } from "../models/listsAndEnums/dbTables";
 import { tableDB } from "../models/interfacesAndTypes/tableDB";
 import { idDB } from "../models/interfacesAndTypes/idDB";
-
 import listLocations from './listLocations.json';
 import listComplexes from './listComplexes.json';
 import listApartments from './listApartment.json'; 
@@ -19,24 +18,23 @@ export class FireBaseDB extends DataBase{
         return Promise.resolve(true);
     };
 
-    async get(table: dbTables): Promise<tableDB>
+    async get(): Promise<tableDB>
     {
         return Promise.resolve([{}]);
     };
 
-    async getAll(): Promise<tableDB>
-    {
-        return Promise.resolve([{}]);
-    };
-
-    async writeAll(data: tableDB, table: dbTables): Promise<boolean>{
+    async write(data: tableDB, table: dbTables): Promise<boolean>{
         return Promise.resolve(true);
     }
 
-    async getByQuery(query: string): Promise<tableDB>{
-        return fetch(listApartments)
-        .then(response => response.json())
-    };
+    async delete(): Promise<boolean> {
+        return Promise.resolve(true);
+      }
+
+    // async getByQuery(query: string): Promise<tableDB>{
+    //     return fetch(listApartments)
+    //     .then(response => response.json())
+    // };
 
     async getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB>{
         
@@ -59,7 +57,7 @@ export class FireBaseDB extends DataBase{
         return fetch(list).then(response => response.json());
     };  
 
-    async getByForeignKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB>{
+    async getByKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB>{
 
     let list: any;
 
@@ -80,7 +78,7 @@ export class FireBaseDB extends DataBase{
             return Promise.resolve([]);
     }
     
-        return fetch(list)
+    return fetch(list)
         .then(response => response.json())
         .then(mass => mass.filter((el: {[id: idDB]: tableFieldValue}) => {
             return foreignKeys.includes(el[fieldName])

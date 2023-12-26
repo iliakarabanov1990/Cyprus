@@ -6,6 +6,7 @@ import { idDB } from "../interfacesAndTypes/idDB";
 import { currDB, favPropStorage } from "../../dataBase/serviceDB";
 import { dbTables } from "../listsAndEnums/dbTables";
 import { User } from "../user/User";
+import { tableFieldValue } from "../interfacesAndTypes/tableFieldValue";
 
 export class ApartmentList extends ObjectList<Apartment>{
 
@@ -33,21 +34,16 @@ export class ApartmentList extends ObjectList<Apartment>{
     //     return obj;    
     // }
 
-    createNewItem(id: idDB, newItemDB?: tableRecord): Apartment{
+    createNewItem(id: idDB, newItemDB: tableRecord): Apartment{
         const apartment = new Apartment(id);
-        if(newItemDB)
-            apartment.fillFromData(newItemDB);
-        else
-            apartment.fillFromDB();
-
+        apartment.fillFromData(newItemDB);
         this.objectList.set(id, apartment);   
-
         return apartment;
     }
 
     async updateByComplexId(id: idDB): Promise<boolean>{
 
-        return currDB.getByForeignKeys(dbTables.apartments, "complexId", [Number(id)])
+        return currDB.getByKeys(dbTables.apartments, "complexId", [Number(id)])
             .then((dataRows) => this.createNewItems(dataRows))
             .then(() => true)
             .catch(() => false);
@@ -62,10 +58,10 @@ export class ApartmentList extends ObjectList<Apartment>{
 
     async updateFavoriteFromServerDB(user: User): Promise<boolean>{
 
-        return currDB.getByForeignKeys(dbTables.userFavorites, "userId", [String(user.id)])
+        return currDB.getByKeys(dbTables.userFavorites, "userId", [String(user.id)])
             .then((dataRows) => {
                 const idArr = dataRows.map(el => el.apartmentId as number);
-                return currDB.getByForeignKeys(dbTables.apartments, "id", idArr);
+                return currDB.getByKeys(dbTables.apartments, "id", idArr);
             })
             .then((dataRows) => {
                 this.createNewItems(dataRows);
@@ -86,10 +82,10 @@ export class ApartmentList extends ObjectList<Apartment>{
         
         if(!user.authorized) return Promise.resolve(true);
 
-        return favPropStorage.getArray()
+        return favPropStorage.get()
             .then((dataRows) => {
-                const idArr = dataRows.map(id => id as number);
-                return currDB.getByForeignKeys(dbTables.apartments, "id", idArr);
+                const idArr = dataRows.map(el => el.id as number);
+                return currDB.getByKeys(dbTables.apartments, "id", idArr);
             })
             .then((dataRows) => {
                 this.createNewItems(dataRows);
@@ -110,10 +106,13 @@ export class ApartmentList extends ObjectList<Apartment>{
         else
             this._favoriteList.delete(idApartment);
 
-        // if(user.authorized)
-        //     //пишем на сервер
-        // else
-            favPropStorage.writeArray(Array.from(this._favoriteList));
+  
+        let tableOfId: tableDB = [];
+        this._favoriteList.forEach(el => {
+            tableOfId.push({id: el});
+        });
+
+        favPropStorage.write(tableOfId!);
     }
 
     get favoriteList(): Set<idDB>{

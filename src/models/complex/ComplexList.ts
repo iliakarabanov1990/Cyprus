@@ -31,8 +31,8 @@ export class ComplexList extends ObjectList<Complex>{
         const complex = new Complex(id);
         if(newItemDB)
             complex.fillFromData(newItemDB);
-        else
-            complex.fillFromDB();
+        // else
+        //     complex.fillFromDB();
 
         this.objectList.set(id, complex);   
 

@@ -46,8 +46,8 @@ export class LocationList extends ObjectList<Location>{
         const location = new Location(id);
         if(newItemDB)
             location.fillFromData(newItemDB);
-        else
-            location.fillFromDB();
+        // else
+        //     location.fillFromDB();
 
         this.objectList.set(id, location);
 

@@ -1,6 +1,6 @@
 import { Apartment } from "../../models/apartment/Apartment";
 import { ComplexList } from "../../models/complex/ComplexList";
-import { dataMap } from "../../models/listsAndEnums/dataMap";
+import { apartments, complexes } from "../../models/listsAndEnums/lists";
 import { dbTables } from "../../models/listsAndEnums/dbTables";
 import { propertyOptionsDescription } from "../../models/listsAndEnums/propertyOptions";
 import { roomsNumberDescription } from "../../models/listsAndEnums/roomsNumberTypes";
@@ -18,7 +18,7 @@ templateItemEl.innerHTML = templateItem;
 export class FavoritesPage extends AbstractPage {
   render(): HTMLElement | DocumentFragment {
 
-    const nameOfComplex = (dataMap.get(dbTables.complexes) as ComplexList)?.objectList.get(Number(this.routeState.params.complexId))?.name;
+    const nameOfComplex = complexes.objectList.get(Number(this.routeState.params.complexId))?.name;
 
     if(!this.routeState.resolvedData || !this.routeState.resolvedData.apartList){
       return templateEl.content.cloneNode(true) as DocumentFragment;                                                           
@@ -34,13 +34,13 @@ export class FavoritesPage extends AbstractPage {
       const buttonLike = cloneTemplateItemEl.querySelector('.apartment-box__like')! as HTMLElement;
       buttonLike.dataset.apartId = el.id as string;
 
-      buttonLike.textContent = (dataMap.get(dbTables.apartments) as ApartmentList).favoriteList.has(el.id) ? "Снять отметку" : "Отметить";
+      buttonLike.textContent = apartments.favoriteList.has(el.id) ? "Снять отметку" : "Отметить";
 
       buttonLike.addEventListener('click', (event) => {
         const apartId = Number((event.target as HTMLElement).dataset.apartId);
-        const isFavorite = (dataMap.get(dbTables.apartments) as ApartmentList).favoriteList.has(el.id);
+        const isFavorite = apartments.favoriteList.has(el.id);
         buttonLike.textContent = isFavorite ? "Отметить" : "Снять отметку";
-        (dataMap.get(dbTables.apartments) as ApartmentList).setRemoveApartmentAsFavorite(this.routeState!.resolvedData!.user as User, apartId, !isFavorite)
+        apartments.setRemoveApartmentAsFavorite(this.routeState!.resolvedData!.user as User, apartId, !isFavorite)
       });
 
       const roomsNumberEl = cloneTemplateItemEl.querySelector('.apartment-box__roomsNumber')!;
