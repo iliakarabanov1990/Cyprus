@@ -1,7 +1,6 @@
 import { dbTables } from "../models/listsAndEnums/dbTables";
 import { idDB } from "../models/interfacesAndTypes/idDB";
 import { tableDB } from "../models/interfacesAndTypes/tableDB";
-import { tableFieldValue } from "../models/interfacesAndTypes/tableFieldValue";
 
 export abstract class DataBase{
     protected _ready: Promise<boolean>;
@@ -23,12 +22,6 @@ export abstract class DataBase{
     abstract get(table?: dbTables,  id?: idDB): Promise<tableDB>;
     abstract write(data: tableDB, table?: dbTables): Promise<boolean>;
     abstract delete(table?: dbTables,  id?: idDB): Promise<boolean>;
-
-    // abstract getByQuery(query: string): Promise<tableDB>;
-
-    // abstract getByKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB>;
-
-    // abstract getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB | undefined>;
 
     get ready(): Promise<boolean>{
         return this._ready;

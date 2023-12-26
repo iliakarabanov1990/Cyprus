@@ -52,6 +52,4 @@ export abstract class ObjectList<T extends ObjectDB> {
         return this._objectList;
     }
 
-
-
 }

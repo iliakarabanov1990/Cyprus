@@ -36,7 +36,7 @@ export class ComplexPage extends AbstractPage {
 
       buttonLike.textContent = apartments.favoriteList.has(el.id) ? "Снять отметку" : "Отметить";
 
-      if(!(this.routeState!.resolvedData!.user as User).authorized)
+      if(!this.routeState!.resolvedData!.user  || !(this.routeState!.resolvedData!.user as User).authorized)
         buttonLike.setAttribute('disabled', '');
 
       buttonLike.addEventListener('click', (event) => {

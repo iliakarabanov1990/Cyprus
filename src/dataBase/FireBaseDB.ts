@@ -31,11 +31,6 @@ export class FireBaseDB extends DataBase{
         return Promise.resolve(true);
       }
 
-    // async getByQuery(query: string): Promise<tableDB>{
-    //     return fetch(listApartments)
-    //     .then(response => response.json())
-    // };
-
     async getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB>{
         
         let list: any;

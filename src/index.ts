@@ -93,7 +93,7 @@ const appRouter = new Router([
     },
     guards: [
       () => {
-        if(user!.authorized)
+        if(user && user!.authorized)
           return true;
         return new Promise<RedirectPath>((resolve) => {
             setTimeout(() => resolve(new RedirectPath("/")), 2_000);
@@ -106,15 +106,18 @@ appRouter.start();
 
 function setVisualizationForUser(user: User | undefined, logInForm: HTMLFormElement, buttonLogIn: HTMLElement, buttonSubmitLogIn: HTMLElement, idPassLabel: HTMLElement){
 
-  logInForm.querySelector('input[name="user-name"]')!.setAttribute('value', user!.name);
-  logInForm.querySelector('input[name="user-phone"]')!.setAttribute('value', user!.phone as string);
-  logInForm.querySelector('input[name="user-email"]')!.setAttribute('value', user!.email);
+  if(user){
+    logInForm.querySelector('input[name="user-name"]')!.setAttribute('value', user.name as string);
+    logInForm.querySelector('input[name="user-phone"]')!.setAttribute('value', user.phone as string);
+    logInForm.querySelector('input[name="user-email"]')!.setAttribute('value', user.email as string);
+  }
 
   if(user && user.authorized){
     buttonLogIn.textContent = "Профиль";
     buttonSubmitLogIn.textContent = "Выйти";
     logInForm.querySelector('input[name="user-phone"]')!.setAttribute('readOnly', 'true');
-    logInForm.querySelector('input[name="user-phone"]')!.setAttribute('readOnly', 'true');
+    logInForm.querySelector('input[name="user-name"]')!.setAttribute('readOnly', 'true');
+    logInForm.querySelector('input[name="user-email"]')!.setAttribute('readOnly', 'true');
     logInForm.querySelector('input[name="user-password"]')!.setAttribute('type', 'hidden');
     idPassLabel!.style.display = 'none'; 
   }
@@ -122,7 +125,8 @@ function setVisualizationForUser(user: User | undefined, logInForm: HTMLFormElem
     buttonLogIn.textContent = "Войти";  
     buttonSubmitLogIn.textContent = "Войти";
     logInForm.querySelector('input[name="user-phone"]')!.removeAttribute('readOnly');
-    logInForm.querySelector('input[name="user-phone"]')!.removeAttribute('readOnly');
+    logInForm.querySelector('input[name="user-email"]')!.removeAttribute('readOnly');
+    logInForm.querySelector('input[name="user-name"]')!.removeAttribute('readOnly');
     logInForm.querySelector('input[name="user-password"]')!.setAttribute('value', '');
     logInForm.querySelector('input[name="user-password"]')!.setAttribute('type', 'password');
   }

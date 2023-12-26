@@ -40,46 +40,4 @@ export class BrowserLocalStorage extends DataBase {
     const jsonData = JSON.stringify(data);
     localStorage.setItem(this.path + "/" + this.name, jsonData);
   }
-
-  // async getArray(): Promise<Array<idDB>> {
-  //   await this._ready;
-  //   const data = this.extractArrayFromStorage();
-  //   return Promise.resolve(data ?? []);
-  // }
-
-  // async writeArray(data: Array<idDB>): Promise<boolean> {
-  //   await this.ready;
-
-  //   this.saveDataToStorage(data);
-
-  //   return Promise.resolve(true);
-  // }
-
-
-
-
-
-  // private extractArrayFromStorage(): Array<idDB> | null{
-  //   const storageData = localStorage.getItem(this.path + "/" + this.name);
-
-  //   return storageData ? JSON.parse(storageData) : null;
-  // }
-
-
-
-  // get(table: dbTables, id: idDB): Promise<tableDB> {
-  //   return Promise.resolve([{}]);
-  // }
-
-  // getByQuery(query: string): Promise<tableDB> {
-  //   return Promise.resolve([{}]);
-  // }
-
-  // getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB> {
-  //   return Promise.resolve([{}]);
-  // }
-
-  // getByKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB> {
-  //   return Promise.resolve([{}]);
-  // }
 }
