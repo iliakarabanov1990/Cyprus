@@ -18,7 +18,7 @@ templateItemEl.innerHTML = templateItem;
 export class ComplexPage extends AbstractPage {
   render(): HTMLElement | DocumentFragment {
 
-    const nameOfComplex = complexes.objectList.get(Number(this.routeState.params.complexId))?.name;
+    const nameOfComplex = complexes.objectList.get(this.routeState.params.complexId)?.name;
 
     if(!this.routeState.resolvedData || !this.routeState.resolvedData.apartList){
       return templateEl.content.cloneNode(true) as DocumentFragment;                                                           
@@ -40,7 +40,7 @@ export class ComplexPage extends AbstractPage {
         buttonLike.setAttribute('disabled', '');
 
       buttonLike.addEventListener('click', (event) => {
-        const apartId = Number((event.target as HTMLElement).dataset.apartId);
+        const apartId = (event.target as HTMLElement).dataset.apartId!;
         const isFavorite = apartments.favoriteList.has(el.id);
         buttonLike.textContent = isFavorite ? "Отметить" : "Снять отметку";
         apartments.setRemoveApartmentAsFavorite(this.routeState!.resolvedData!.user as User, apartId, !isFavorite)

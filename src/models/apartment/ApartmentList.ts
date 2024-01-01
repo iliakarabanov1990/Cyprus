@@ -43,7 +43,7 @@ export class ApartmentList extends ObjectList<Apartment>{
 
     async updateByComplexId(id: idDB): Promise<boolean>{
 
-        return currDB.getByKeys(dbTables.apartments, "complexId", [Number(id)])
+        return currDB.getByKeys(dbTables.apartments, "complexId", [id])
             .then((dataRows) => this.createNewItems(dataRows))
             .then(() => true)
             .catch(() => false);
@@ -58,22 +58,15 @@ export class ApartmentList extends ObjectList<Apartment>{
 
     async updateFavoriteFromServerDB(user: User): Promise<boolean>{
 
-        return currDB.getByKeys(dbTables.userFavorites, "userId", [String(user.id)])
-            .then((dataRows) => {
-                const idArr = dataRows.map(el => el.apartmentId as number);
-                return currDB.getByKeys(dbTables.apartments, "id", idArr);
-            })
-            .then((dataRows) => {
-                this.createNewItems(dataRows);
-                return dataRows;
-            })
-            .then((dataRows) => {          
-                dataRows.forEach(el => {
-                    this._favoriteList.add(el.id as idDB);                 
-                });    
-            })
-            .then(() => true)
-            .catch(() => false);
+        return currDB.get(dbTables.userFavorites, user.id).then((dataTable) => {
+            
+            if(dataTable && dataTable.length && dataTable[0])
+                this._favoriteList = new Set(dataTable[0].favorites.toString().split(' '));
+            else
+                this._favoriteList = new Set();
+
+            return Promise.resolve(true); 
+        });
     }
 
     async updateFavoriteFromLocalStorage(user: User): Promise<boolean>{
@@ -106,13 +99,8 @@ export class ApartmentList extends ObjectList<Apartment>{
         else
             this._favoriteList.delete(idApartment);
 
-  
-        let tableOfId: tableDB = [];
-        this._favoriteList.forEach(el => {
-            tableOfId.push({id: el});
-        });
-
-        favPropStorage.write(tableOfId!);
+        currDB.write([{id: user.id, favorites: Array.from(this._favoriteList.values()).join(' ')}], 
+                        dbTables.userFavorites);
     }
 
     get favoriteList(): Set<idDB>{

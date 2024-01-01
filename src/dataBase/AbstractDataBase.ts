@@ -2,7 +2,7 @@ import { dbTables } from "../models/listsAndEnums/dbTables";
 import { idDB } from "../models/interfacesAndTypes/idDB";
 import { tableDB } from "../models/interfacesAndTypes/tableDB";
 
-export abstract class DataBase{
+export abstract class AbstractDataBase{
     protected _ready: Promise<boolean>;
     readonly #path: string; 
     readonly #name: string;

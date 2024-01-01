@@ -52,17 +52,17 @@
                         <span onclick="document.getElementById('id-log-in').style.display='none'" class="close" title="Close Modal">&times;</span>
                     </div>
                     <div class="container">
-                        <label for="user-phone"><b>Телефон</b></label>
+                        <label style="display:none" for="user-phone"><b>Телефон</b></label>
                         <input type="tel" placeholder="Введите телефон" name="user-phone">   
                         <ul id = "phoneError" class="error-list"></ul>             
-                        <label for="user-email"><b>Электронная почта</b></label>
-                        <input type="email" placeholder="Введите e-mail *необязательно" name="user-email">  
+                        <label style="display:none" for="user-email"><b>Электронная почта</b></label>
+                        <input style="display:none" type="email" placeholder="Введите e-mail *необязательно" name="user-email">  
                         <ul id = "emailError" class="error-list"></ul>                    
-                        <label for="user-name"><b>Имя</b></label>
-                        <input type="text" placeholder="Введите имя *необязательно" name="user-name">
+                        <label style="display:none" for="user-name"><b>Имя</b></label>
+                        <input style="display:none" type="text" placeholder="Введите имя *необязательно" name="user-name">
                         <ul id = "nameError" class="error-list"></ul>
                         <label id = "id-pass-label" for="user-password"><b>Пароль</b></label>
-                        <input type="password" placeholder="Введите пароль" name="user-password">
+                        <input type="password" placeholder="Введите пароль (минимум 6 символов)" name="user-password">
                         <ul id = "passwordError" class="error-list"></ul>    
                         <div>                 
                             <button type="submit" name='submit'>Войти</button>

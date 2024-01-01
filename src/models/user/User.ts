@@ -1,3 +1,4 @@
+import { UserCredential } from "firebase/auth";
 import { currDB, userStorage } from "../../dataBase/serviceDB";
 import { ObjectDB } from "../abstracts/ObjectDB";
 import { idDB } from "../interfacesAndTypes/idDB";
@@ -11,7 +12,7 @@ export class User extends ObjectDB {
   private _authorized: boolean;
   static tableName = dbTables.users;
 
-  constructor(phone: idDB, email: string = '', password: string = '', name: string = '', description: string = '', imgMain: string = '') {
+  constructor(phone: idDB = '', email: string = '', password: string = '', name: string = '', description: string = '', imgMain: string = '') {
     
     super(phone, name, description, imgMain);
 
@@ -22,55 +23,31 @@ export class User extends ObjectDB {
   }
 
   async authorize(): Promise<boolean> {
-    if(!this._phone){
-        this._authorized = false;
+    
+    this._authorized = false;
+   
+    if(!this.id){  
         return Promise.resolve(false);
     }
 
-    return currDB.getByKeys(dbTables.users, "id", [String(this._phone)])
-        .then(dataRows => {
-
-            // let dataRow: tableRecord;
-            //if(!dataRows.length){
-                // dataRow = {
-                //     'id': this._phone,
-                //     'email': this._email,
-                //     'name': this._name,
-                //     'password': this._password,
-                // };
-                // currDB.write([dataRow], dbTables.users);
-                
-            // }
-            // else  
-            
-            if(!dataRows.length){
-                this._authorized = false;
-                return false;
-            }
-            const dataRow: tableRecord = dataRows[0];
-   
-            this._authorized = dataRow.password === this._password; // заменить на хэширование и проверку на сервере
-            if(this._authorized){  
-                if(!this._email)
-                    this._email = dataRow.email as string;
-                if(!this._name)
-                    this._name = dataRow.name as string;
-                
-                userStorage.write([{
-                        'id': this._phone,
-                        'email': this._email,
-                        'name': this._name,
-                        // 'password': this._password,
-                        'authorized': this._authorized,
-                    }]);
-            }
-
-            return this._authorized;
-
-        })
+    // return currDB.getByKeys(dbTables.users, "id", [String(this._phone)])
+    return currDB.signIn(this.id, this._password)
+        .catch(answ => 
+            currDB.logIn(this.id, this._password))
+        .then((userCredential) => this.handleAuth(userCredential))   
         .then(answ => answ)
-        .catch(answ => false)
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            return false;
+        });
     }
+
+    handleAuth(credential: UserCredential) {
+        const serverData = credential.user;
+        if(serverData)
+            this._authorized = true;
+        return this._authorized;}
 
     get phone(): idDB{
         return this._phone;

@@ -8,20 +8,36 @@ import { userDataValidating } from "./service/validator/userDataValidating";
 import { FormValidator } from "./service/validator/FormValidator";
 import {requiredText, validEmail, validPhone} from "./service/validator/Validators";
 import { clearMessages, createElementByErr, setFormErrors } from "./service/validator/serviceFunctions";
-import { userStorage } from "./dataBase/serviceDB";
-import { idDB } from "./models/interfacesAndTypes/idDB";
+import { currDB, userStorage } from "./dataBase/serviceDB";
 import "./styles/style.scss";
 
 await locations.updateFromDB(dbTables.locations)
-  .then(() => complexes.updateFromDB(dbTables.complexes));
+  .then(() => complexes.updateFromDB(dbTables.complexes))
+  .then(() => apartments.updateFromDB(dbTables.apartments));
 
+const currPage = "/";
 const logInForm = document.forms.namedItem("log-in")!;
 const buttonLogIn = document.querySelector('.log-in button')! as HTMLElement;
 const buttonSubmitLogIn = logInForm.querySelector('button[name="submit"]')! as HTMLElement;
 const idPassLabel = document.getElementById('id-pass-label') as HTMLElement;
+let user: User = new User();
 
-let user: User | undefined;
-const userLocal = await userStorage.get();
+currDB.auth.onAuthStateChanged((us) => {
+  if (us) {
+
+    user = new User(us.email!.replace('@mail.com', ''), '', '', us.displayName ?? undefined);
+    user.authorized = true;
+    setVisualizationForUser(user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel);
+
+  } else {
+    user = new User();
+    setVisualizationForUser(user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel);
+  }});
+
+  // setVisualizationForUser(user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel);
+
+ const curUs = currDB.getCurrUser();
+// const userLocal = await userStorage.get();
 const userDataValidator = new FormValidator <userDataValidating>({
   name: [],
   email: [
@@ -37,15 +53,15 @@ const userDataValidator = new FormValidator <userDataValidating>({
 });
 
 
-if(userLocal.length && userLocal[0].id){
-  const userRow = userLocal[0];
-  user = new User(userRow.id as idDB, userRow.email as string, '', userRow.name as string);
-  user.authorized = userRow.authorized as boolean;
-  setVisualizationForUser(user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel);
-  await apartments.updateFavoriteFromLocalStorage(user);
-}
+// if(userLocal.length && userLocal[0].id){
+//   const userRow = userLocal[0];
+//   user = new User(userRow.id as idDB, userRow.email as string, '', userRow.name as string);
+//   user.authorized = userRow.authorized as boolean;
+//   setVisualizationForUser(user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel);
+//   await apartments.updateFavoriteFromServerDB(user);
+// }
 
-logInForm.addEventListener("submit", (event) => handleLogIn(event, user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel));
+logInForm.addEventListener("submit", (event) => handleLogIn(event, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel));
 
 const appRouter = new Router([
   {
@@ -61,9 +77,7 @@ const appRouter = new Router([
           .then(() =>
             complexes.updateFromDB(dbTables.complexes)
           )
-          .then(() => {
-            return Array.from(complexes.objectList.values());
-          })
+          .then(() => Array.from(complexes.objectList.values()))
           .catch(() => false),
     },
   },
@@ -73,7 +87,7 @@ const appRouter = new Router([
     page: ComplexPage,
     resolve: {
       apartList: (state) => {
-        const complexId = Number(state.params.complexId);
+        const complexId = state.params.complexId;
         return apartments.updateByComplexId(complexId).then(()=>
             Array.from(apartments.objectList.values()).filter(el => el.complex!.id === complexId))
       },
@@ -86,8 +100,12 @@ const appRouter = new Router([
     page: FavoritesPage,
     resolve: {
       apartList: () => {
-        return apartments.updateFavoriteFromLocalStorage(user!).then(()=>
-            Array.from(apartments.objectList.values()).filter(el => apartments.favoriteList.has(el.id)))
+        return apartments.updateFavoriteFromServerDB(user!).then((result)=> {
+          if(result)
+            return Array.from(apartments.objectList.values()).filter(el => apartments.favoriteList.has(el.id))
+          else
+            return result;
+        })
       },
       user: ()=>(user),
     },
@@ -104,7 +122,7 @@ const appRouter = new Router([
 
 appRouter.start();
 
-function setVisualizationForUser(user: User | undefined, logInForm: HTMLFormElement, buttonLogIn: HTMLElement, buttonSubmitLogIn: HTMLElement, idPassLabel: HTMLElement){
+function setVisualizationForUser(user: User, logInForm: HTMLFormElement, buttonLogIn: HTMLElement, buttonSubmitLogIn: HTMLElement, idPassLabel: HTMLElement){
 
   if(user){
     logInForm.querySelector('input[name="user-name"]')!.setAttribute('value', user.name as string);
@@ -132,7 +150,7 @@ function setVisualizationForUser(user: User | undefined, logInForm: HTMLFormElem
   }
 }
 
-async function handleLogIn(event: SubmitEvent, user: User | undefined, logInForm: HTMLFormElement, buttonLogIn: HTMLElement, buttonSubmitLogIn: HTMLElement, idPassLabel: HTMLElement): Promise<void>{
+async function handleLogIn(event: SubmitEvent, logInForm: HTMLFormElement, buttonLogIn: HTMLElement, buttonSubmitLogIn: HTMLElement, idPassLabel: HTMLElement): Promise<void>{
   
   event.preventDefault();
 
@@ -156,24 +174,22 @@ async function handleLogIn(event: SubmitEvent, user: User | undefined, logInForm
     await user.authorize().then(() => setVisualizationForUser(user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel));
 
     if(user.authorized)
-      // document.getElementById('id-log-in')!.style.display='none';
-      setTimeout(()=>{location.reload()},100);
+      // setTimeout(()=>{location.reload()}, 100);
+       setTimeout(()=>{appRouter.navigate(window.location.pathname)}, 100);
     else
       document.getElementById('submitError')!.appendChild(createElementByErr('Вход не выполнен'));
+    // if(!user.authorized)  
+    //   document.getElementById('submitError')!.appendChild(createElementByErr('Вход не выполнен'));
   }
   else{ 
     user!.authorized = false;
-    userStorage.write([{
-      'id': user!.phone,
-      'email': user!.email,
-      'name': user!.name,
-      'password': '',
-      'authorized': user!.authorized
-    }]);
+    await currDB.signOut();
 
     setVisualizationForUser(user, logInForm, buttonLogIn as HTMLElement, buttonSubmitLogIn as HTMLElement, idPassLabel);
-    setTimeout(()=>{location.reload()},100);
+    setTimeout(()=>{appRouter.navigate(window.location.pathname)}, 100);
   }
   if(user)
-    await apartments.updateFavoriteFromLocalStorage(user);
+    await apartments.updateFavoriteFromServerDB(user);
+
+    const s = currDB.getCurrUser();
 }

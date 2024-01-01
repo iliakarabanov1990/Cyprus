@@ -6,7 +6,7 @@ export abstract class ObjectDB{
 
     static readonly tableName: dbTables;
 
-    constructor(protected _id: idDB, 
+    constructor(protected _id: idDB = '', 
             protected _name: string = '', 
                 protected _description: string = '', 
                     protected _imgMain: string = ''){

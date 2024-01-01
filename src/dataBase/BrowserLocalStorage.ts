@@ -2,9 +2,9 @@ import { idDB } from "../models/interfacesAndTypes/idDB";
 import { tableDB } from "../models/interfacesAndTypes/tableDB";
 import { tableFieldValue } from "../models/interfacesAndTypes/tableFieldValue";
 import { dbTables } from "../models/listsAndEnums/dbTables";
-import { DataBase } from "./DataBase";
+import { AbstractDataBase } from "./AbstractDataBase";
 
-export class BrowserLocalStorage extends DataBase {
+export class BrowserLocalStorage extends AbstractDataBase {
   constructor(name: string, path: string) {
     super(name, path);
   }
