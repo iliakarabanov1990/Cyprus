@@ -1,4 +1,3 @@
-
 import { currDB } from "../../dataBase/serviceDB";
 import { idDB } from "../interfacesAndTypes/idDB";
 import { tableDB } from "../interfacesAndTypes/tableDB";
@@ -16,14 +15,9 @@ export abstract class ObjectList<T extends ObjectDB> {
 
     abstract createNewItems(newItemsDB: tableDB): void;
     abstract createNewItem(id: idDB, newItemsDB: tableRecord): T;
-    // abstract getItem(id: idDB, tableRecord?: tableRecord): T | undefined;
 
     async checkNewItems(tableName: dbTables): Promise<tableDB | undefined>{
-
-        return await currDB.getNewRecords(tableName, Object.keys(this.objectList));
-
-        //return await ServiceDB.currDB.getByQuery(`SELECT * FROM ${tableName} WHERE NOT id IN ${Object.keys(this.objectList).join(', ')}`);
-        
+        return currDB.getNewRecords(tableName, Object.keys(this.objectList));      
     }
 
     async updateFromDB(tableName: dbTables): Promise<boolean>{

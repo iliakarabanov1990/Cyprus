@@ -8,11 +8,11 @@ const templateItemEl = document.createElement('template');
 templateEl.innerHTML = template;
 templateItemEl.innerHTML = templateItem;
 
-interface ProductInfo {
-  id: number;
-  price: number;
-  title: string;
-}
+// interface ProductInfo {
+//   id: number;
+//   price: number;
+//   title: string;
+// }
 
 export class ComplexesPage extends AbstractPage {
   render(): HTMLElement | DocumentFragment {

@@ -9,13 +9,16 @@ export abstract class ObjectDB{
     constructor(protected _id: idDB = '', 
             protected _name: string = '', 
                 protected _description: string = '', 
-                    protected _imgMain: string = ''){
+                    protected _imgMain: string = '',
+                        protected _images: string[] = []){
     }
 
     fillFromData(record: tableRecord): void{
         this._name = record.name as string;
         this._description = record.description as string;
-        this._imgMain = record.imgMain as string;
+        this._images = record.images as string[];
+        if(record.images && (record.images as string[]).length)
+            this._imgMain = (record.images as string[])[0] as string;
     };
 
     get id(): idDB{
@@ -32,6 +35,10 @@ export abstract class ObjectDB{
 
     get imgMain(): string{
         return this._imgMain;
+    }
+
+    get images(): string[]{
+        return this._images;
     }
 
     //abstract get(id: idDB):Promise<boolean>;

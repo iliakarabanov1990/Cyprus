@@ -1,5 +1,6 @@
 @import "reset.css";
 @import "formStyle";
+@import "slider";
 
 $grey-color: #514840;
 $brown-color: #8D5C34;
@@ -242,6 +243,32 @@ footer{
       .apartment-box__like{
         width: 70px;
         padding: 5px 5px;
+      }
+    }
+
+    .flex-box-img{
+      // @include wrapper-margin();
+      width: 100%;
+      // border: red 4px solid;
+      @include flex-box(row, center, center, 2vw, wrap);
+
+      .flex-box-img__left{
+        // border: blue 4px solid;
+        // flex-basis: 1fr;
+        min-width: 250px;
+        flex: 0 1 45%;
+      }
+      .flex-box-img__right{
+        // max-width: 40%;
+        min-width: 250px;
+        // border: green 4px solid;
+        // flex-basis: 1fr;
+        background-color: #eee;
+        display: grid;
+        gap: 1vw;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        flex: 0 1 45%;
       }
     }
 }

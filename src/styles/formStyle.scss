@@ -8,19 +8,9 @@ input[type=text], [type=email], [type=tel], input[type=password] {
     box-sizing: border-box;
   }
   
-  .close-container {
-    text-align: center;
-    margin: 24px 0 12px 0;
-    position: relative;
-  }
-  
   img.avatar {
     width: 40%;
     border-radius: 50%;
-  }
-  
-  .container {
-    padding: 16px;
   }
   
   span.psw {
@@ -46,10 +36,44 @@ input[type=text], [type=email], [type=tel], input[type=password] {
       align-self: end;
     }
 
-    .container div{
+    .close-container {
+      text-align: center;
+      margin: 24px 0px 30px 0px;
+      position: relative;
+    }
+
+    .container{
       display: flex;
       flex-direction: column;
-      align-items: end;
+      align-items: center;
+      padding: 16px;
+      a{
+        border: solid #8D5C34 2px;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 10px 0 10px 0;
+      }
+      // div{
+      //   display: flex;
+      //   flex-direction: column;
+      //   align-items: end;   
+      // }
+
+      .submit{
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        justify-items: end;
+        align-self: end;
+        margin-top: 30px;
+      }
+
+      // .container div{
+      //   display: flex;
+      //   flex-direction: column;
+      //   align-items: end;
+      // }
+      
     }
   }
   
@@ -63,15 +87,15 @@ input[type=text], [type=email], [type=tel], input[type=password] {
   
   .close {
     position: absolute;
-    right: 25px;
-    top: 0;
+    right: 15px;
+    top: -10px;
     color: #000;
     font-size: 35px;
     font-weight: bold;
 
     &:hover,
     .close:focus {
-      color: red;
+      color: rgb(49, 6, 6);
       cursor: pointer;
     }
   }

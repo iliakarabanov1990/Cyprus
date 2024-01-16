@@ -24,6 +24,7 @@
     "webpack-dev-server": "4.15.1"
   },
   "dependencies": {
-    "firebase": "^10.7.1"
+    "firebase": "^10.7.1",
+    "geoip-lite": "^1.4.9"
   }
 }

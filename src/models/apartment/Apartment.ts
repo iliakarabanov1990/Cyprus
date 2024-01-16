@@ -24,15 +24,16 @@ export class Apartment extends ResidentialProperty{
 
         super.fillFromData(record);
 
-        this.#complex = complexes.getItem(record.complexId as number) as Complex;
-        this._roomsNumber = record.roomsNumber as roomsNumberTypes;
-        this._commissioningDate = record.commissioningDate as string;
+        this.#complex = complexes.getItem(record.complex as string) as Complex;
+        this._roomsNumber = record.type as roomsNumberTypes;
+        if(record.commissioningDate)
+            this._commissioningDate = record.commissioningDate.toString().slice(0, 4);
         this._square = record.square as number;
         this.#floor = record.floor as string;
         this._price = record.price as number;
     }
 
-    get complex(): Complex | undefined{
+    get complex(): Complex | undefined{  
         return this.#complex;
     }
 

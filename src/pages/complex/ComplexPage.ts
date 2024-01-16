@@ -1,8 +1,5 @@
 import { Apartment } from "../../models/apartment/Apartment";
-import { ApartmentList } from "../../models/apartment/ApartmentList";
-import { ComplexList } from "../../models/complex/ComplexList";
 import { apartments, complexes } from "../../models/listsAndEnums/lists";
-import { dbTables } from "../../models/listsAndEnums/dbTables";
 import { propertyOptionsDescription } from "../../models/listsAndEnums/propertyOptions";
 import { roomsNumberDescription } from "../../models/listsAndEnums/roomsNumberTypes";
 import { User } from "../../models/user/User";

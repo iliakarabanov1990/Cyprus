@@ -1,6 +1,6 @@
 import { RedirectPath, Router } from "./router";
 import { HomePage, ComplexesPage, FavoritesPage, } from "./pages";
-import { complexes, apartments, locations } from "./models/listsAndEnums/lists";
+import { locations, complexes, apartments } from "./models/listsAndEnums/lists";
 import { dbTables } from "./models/listsAndEnums/dbTables";
 import { ComplexPage } from "./pages/complex/ComplexPage";
 import { User } from "./models/user/User";
@@ -8,14 +8,17 @@ import { userDataValidating } from "./service/validator/userDataValidating";
 import { FormValidator } from "./service/validator/FormValidator";
 import {requiredText, validEmail, validPhone} from "./service/validator/Validators";
 import { clearMessages, createElementByErr, setFormErrors } from "./service/validator/serviceFunctions";
-import { currDB, userStorage } from "./dataBase/serviceDB";
+import { currDB } from "./dataBase/serviceDB";
 import "./styles/style.scss";
 
-await locations.updateFromDB(dbTables.locations)
+// import {  Router } from "./router";
+// import { CartPage } from "./pages";
+
+
+locations.updateFromDB(dbTables.locations)
   .then(() => complexes.updateFromDB(dbTables.complexes))
   .then(() => apartments.updateFromDB(dbTables.apartments));
-
-const currPage = "/";
+    
 const logInForm = document.forms.namedItem("log-in")!;
 const buttonLogIn = document.querySelector('.log-in button')! as HTMLElement;
 const buttonSubmitLogIn = logInForm.querySelector('button[name="submit"]')! as HTMLElement;
@@ -32,12 +35,9 @@ currDB.auth.onAuthStateChanged((us) => {
   } else {
     user = new User();
     setVisualizationForUser(user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel);
-  }});
+  }
+});
 
-  // setVisualizationForUser(user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel);
-
- const curUs = currDB.getCurrUser();
-// const userLocal = await userStorage.get();
 const userDataValidator = new FormValidator <userDataValidating>({
   name: [],
   email: [
@@ -52,21 +52,15 @@ const userDataValidator = new FormValidator <userDataValidating>({
   ],
 });
 
-
-// if(userLocal.length && userLocal[0].id){
-//   const userRow = userLocal[0];
-//   user = new User(userRow.id as idDB, userRow.email as string, '', userRow.name as string);
-//   user.authorized = userRow.authorized as boolean;
-//   setVisualizationForUser(user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel);
-//   await apartments.updateFavoriteFromServerDB(user);
-// }
-
 logInForm.addEventListener("submit", (event) => handleLogIn(event, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel));
 
 const appRouter = new Router([
   {
     path: "",
     page: HomePage,
+    resolve: {
+      user: ()=>user,
+    },
   },
   {
     path: "complexes",
@@ -130,6 +124,9 @@ function setVisualizationForUser(user: User, logInForm: HTMLFormElement, buttonL
     logInForm.querySelector('input[name="user-email"]')!.setAttribute('value', user.email as string);
   }
 
+  const quizForm = document.forms.namedItem("quiz")!;
+  const contactForm = document.forms.namedItem("contact")!;
+
   if(user && user.authorized){
     buttonLogIn.textContent = "Профиль";
     buttonSubmitLogIn.textContent = "Выйти";
@@ -138,6 +135,11 @@ function setVisualizationForUser(user: User, logInForm: HTMLFormElement, buttonL
     logInForm.querySelector('input[name="user-email"]')!.setAttribute('readOnly', 'true');
     logInForm.querySelector('input[name="user-password"]')!.setAttribute('type', 'hidden');
     idPassLabel!.style.display = 'none'; 
+
+    if(quizForm)
+      quizForm.querySelector('input[name="user-phone"]')!.setAttribute('value', (user as User).phone as string);
+    if(contactForm)
+    contactForm.querySelector('input[name="user-phone"]')!.setAttribute('value', (user as User).phone as string);
   }
   else{
     buttonLogIn.textContent = "Войти";  
@@ -147,6 +149,11 @@ function setVisualizationForUser(user: User, logInForm: HTMLFormElement, buttonL
     logInForm.querySelector('input[name="user-name"]')!.removeAttribute('readOnly');
     logInForm.querySelector('input[name="user-password"]')!.setAttribute('value', '');
     logInForm.querySelector('input[name="user-password"]')!.setAttribute('type', 'password');
+    
+    if(quizForm)
+      quizForm.querySelector('input[name="user-phone"]')!.setAttribute('value', '');
+    if(contactForm)
+      contactForm.querySelector('input[name="user-phone"]')!.setAttribute('value', (user as User).phone as string);
   }
 }
 
@@ -174,16 +181,13 @@ async function handleLogIn(event: SubmitEvent, logInForm: HTMLFormElement, butto
     await user.authorize().then(() => setVisualizationForUser(user, logInForm, buttonLogIn, buttonSubmitLogIn, idPassLabel));
 
     if(user.authorized)
-      // setTimeout(()=>{location.reload()}, 100);
        setTimeout(()=>{appRouter.navigate(window.location.pathname)}, 100);
     else
       document.getElementById('submitError')!.appendChild(createElementByErr('Вход не выполнен'));
-    // if(!user.authorized)  
-    //   document.getElementById('submitError')!.appendChild(createElementByErr('Вход не выполнен'));
   }
   else{ 
     user!.authorized = false;
-    await currDB.signOut();
+    await currDB.signOut();       
 
     setVisualizationForUser(user, logInForm, buttonLogIn as HTMLElement, buttonSubmitLogIn as HTMLElement, idPassLabel);
     setTimeout(()=>{appRouter.navigate(window.location.pathname)}, 100);
@@ -193,3 +197,37 @@ async function handleLogIn(event: SubmitEvent, logInForm: HTMLFormElement, butto
 
     const s = currDB.getCurrUser();
 }
+
+
+
+
+
+
+
+
+
+// document.addEventListener("click", getCountryByIp);
+// function getCountryByIp() {
+//   fetch('https://ipapi.co/json/')
+//   .then(d => d.json())
+//   .then(d => {
+//     var url = "http://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address?ip=";
+//     var token = "130c12b40a67cb51d371ef2183a05dd9da722537";
+//     var query = d.ip;
+
+//     const options = {
+//     method: "GET",
+//     mode: "cors",
+//     headers: {
+//         "Content-Type": "application/json",
+//         "Accept": "application/json",
+//         "Authorization": "Token " + token
+//       }
+//     }
+
+//     fetch(url + query, options as RequestInit)
+//     .then(response => response.json())
+//     .then(result => console.log(result))
+//     .catch(error => console.log("error", error));
+//   });
+// }

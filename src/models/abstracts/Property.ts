@@ -26,8 +26,9 @@ export abstract class Property extends ObjectDB{
 
         super.fillFromData(record);
 
-        this._propertyOptions = (record.propertyOptions as unknown[]).map(el => el as propertyOptions);
-        this._location = locations.getItem(record.locationId as number) as Location;
+        if(record.propertyOptions)
+            this._propertyOptions = (record.propertyOptions as unknown[]).map(el => el as propertyOptions);
+        this._location = locations.getItem(record.location as string) as Location;
     };
 
     get location(): Location | undefined{

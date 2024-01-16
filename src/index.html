@@ -26,9 +26,9 @@
                         </a>
                     </div> 
                     <div class="contacts__phone-box">                     
-                        <a href="+375333531119" class="contacts__phone">
+                        <a href="tel:+375333531119" class="contacts__phone">
                             <img src="<%= require('./files/images/phone-icon.png') %>" alt="phone icon" class="img-icon">
-                            +375333531119
+                            +375 (29) 769-11-80
                         </a>
                     </div>  
                 </section>             
@@ -61,10 +61,10 @@
                         <label style="display:none" for="user-name"><b>Имя</b></label>
                         <input style="display:none" type="text" placeholder="Введите имя *необязательно" name="user-name">
                         <ul id = "nameError" class="error-list"></ul>
-                        <label id = "id-pass-label" for="user-password"><b>Пароль</b></label>
+                        <label style="display:none" id = "id-pass-label" for="user-password"><b>Пароль</b></label>
                         <input type="password" placeholder="Введите пароль (минимум 6 символов)" name="user-password">
                         <ul id = "passwordError" class="error-list"></ul>    
-                        <div>                 
+                        <div class="submit">                  
                             <button type="submit" name='submit'>Войти</button>
                             <ul id = "submitError" class="error-list"></ul>
                         </div>            
@@ -79,7 +79,10 @@
             </router-outlet>
         </main>
         <footer>
-            footer
+            <a href="tel:+375297691180" class="contacts__phone">
+                <img src="<%= require('./files/images/phone-icon.png') %>" alt="phone icon" class="img-icon">
+                Свяжитесь с нами: +375 (29) 769-11-80
+            </a>
         </footer>
     </div>
 </body>

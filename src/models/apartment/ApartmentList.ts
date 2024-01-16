@@ -3,7 +3,7 @@ import { ObjectList } from "../abstracts/ObjectList";
 import { tableDB } from "../interfacesAndTypes/tableDB";
 import { tableRecord } from "../interfacesAndTypes/tableRecord";
 import { idDB } from "../interfacesAndTypes/idDB";
-import { currDB, favPropStorage } from "../../dataBase/serviceDB";
+import { currDB } from "../../dataBase/serviceDB";
 import { dbTables } from "../listsAndEnums/dbTables";
 import { User } from "../user/User";
 import { tableFieldValue } from "../interfacesAndTypes/tableFieldValue";
@@ -52,8 +52,9 @@ export class ApartmentList extends ObjectList<Apartment>{
     async updateFavoriteFromDB(user: User): Promise<boolean>{
         if(user.authorized)
             return this.updateFavoriteFromServerDB(user);
-        else
-            return this.updateFavoriteFromLocalStorage(user);
+         else
+            return Promise.resolve(false);
+        //     return this.updateFavoriteFromLocalStorage(user);
     }
 
     async updateFavoriteFromServerDB(user: User): Promise<boolean>{
@@ -61,7 +62,7 @@ export class ApartmentList extends ObjectList<Apartment>{
         return currDB.get(dbTables.userFavorites, user.id).then((dataTable) => {
             
             if(dataTable && dataTable.length && dataTable[0])
-                this._favoriteList = new Set(dataTable[0].favorites.toString().split(' '));
+                this._favoriteList = new Set(dataTable[0].toString().split(' '));
             else
                 this._favoriteList = new Set();
 
@@ -69,29 +70,29 @@ export class ApartmentList extends ObjectList<Apartment>{
         });
     }
 
-    async updateFavoriteFromLocalStorage(user: User): Promise<boolean>{
+    // async updateFavoriteFromLocalStorage(user: User): Promise<boolean>{
 
-        this._favoriteList.clear();
+    //     this._favoriteList.clear();
         
-        if(!user.authorized) return Promise.resolve(true);
+    //     if(!user.authorized) return Promise.resolve(true);
 
-        return favPropStorage.get()
-            .then((dataRows) => {
-                const idArr = dataRows.map(el => el.id as number);
-                return currDB.getByKeys(dbTables.apartments, "id", idArr);
-            })
-            .then((dataRows) => {
-                this.createNewItems(dataRows);
-                return dataRows;
-            })
-            .then((dataRows) => {          
-                dataRows.forEach(el => {
-                    this._favoriteList.add(el.id as idDB);                 
-                });    
-            })
-            .then(() => true)
-            .catch(() => false);
-    }
+    //     return favPropStorage.get()
+    //         .then((dataRows) => {
+    //             const idArr = dataRows.map(el => el.id as number);
+    //             return currDB.getByKeys(dbTables.apartments, "id", idArr);
+    //         })
+    //         .then((dataRows) => {
+    //             this.createNewItems(dataRows);
+    //             return dataRows;
+    //         })
+    //         .then((dataRows) => {          
+    //             dataRows.forEach(el => {
+    //                 this._favoriteList.add(el.id as idDB);                 
+    //             });    
+    //         })
+    //         .then(() => true)
+    //         .catch(() => false);
+    // }
 
     async setRemoveApartmentAsFavorite(user: User, idApartment: idDB, favorite: boolean){
         if(favorite)

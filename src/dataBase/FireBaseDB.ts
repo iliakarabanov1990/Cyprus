@@ -1,10 +1,6 @@
 import { dbTables } from "../models/listsAndEnums/dbTables";
 import { tableDB } from "../models/interfacesAndTypes/tableDB";
 import { idDB } from "../models/interfacesAndTypes/idDB";
-import listLocations from './listLocations.json';
-import listComplexes from './listComplexes.json';
-import listApartments from './listApartment.json'; 
-import listUsers from './listUsers.json'; 
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { Database, getDatabase, ref, set, get } from "firebase/database";
 import { Auth, UserCredential, getAuth, createUserWithEmailAndPassword,  signInWithEmailAndPassword, signOut} from "firebase/auth";
@@ -42,10 +38,11 @@ export class FireBaseDB extends AbstractDataBase{
 
     async get(table: dbTables, id?: idDB): Promise<tableDB>
     {
-        const query = ref(this.#database, `${dbTables[table]}/${id}`);
+        const idSnip: string = id ? `/${id}` : '';
+        const query = ref(this.#database, `${dbTables[table]}` + idSnip);
         //const query = ref(this.#database, `${dbTables[table]}`);
         return Promise.resolve(get(query))
-        .then(data => [data.val()])
+        .then(data => Object.values(data.val()) as tableDB)    
         .catch((err)=>[]);
     };
 
@@ -80,53 +77,19 @@ export class FireBaseDB extends AbstractDataBase{
     }
 
     async getNewRecords(table: dbTables, existedId: idDB[]): Promise<tableDB>{
-        
-        let list: any;
+ 
+        const tableData: tableDB = await this.get(table);
 
-        switch (table) {
-            case dbTables.locations:
-                list = listLocations;
-                break;
-            case dbTables.complexes:
-                list = listComplexes;
-                break;
-            case dbTables.apartments:
-                list = listApartments;
-                break;
-            default:
-                return Promise.resolve([]);
-        }      
-        
-        return fetch(list).then(response => response.json());
+        return Promise.resolve(tableData.filter(el => !existedId.includes(el.id as idDB)));
     };  
 
     async getByKeys(table: dbTables, fieldName: string, foreignKeys: tableFieldValue[]): Promise<tableDB>{
 
-    let list: any;
-
-    switch (table) {
-        case dbTables.locations:
-            list = listLocations;
-            break;
-        case dbTables.complexes:
-            list = listComplexes;
-            break;
-        case dbTables.apartments:
-            list = listApartments;
-            break;
-        case dbTables.users:
-            list = listUsers;
-            break;
-        default:
-            return Promise.resolve([]);
-    }
+        const tableData: tableDB = await this.get(table);
     
-    return fetch(list)
-        .then(response => response.json())
-        .then(mass => mass.filter((el: {[id: idDB]: tableFieldValue}) => {
+        return tableData.filter((el: {[id: idDB]: tableFieldValue}) => {
             return foreignKeys.includes(el[fieldName])
-        }));
-        // return Promise.resolve(fetch(listLocations).then(response => response.json()));
+        });
     };
 
     getCurrUser(){

@@ -6,10 +6,57 @@
             <p><span>жизни </span><span> инвестиций</span><span> отдыха</span></p>
         </h1>
         <div>
-            <button>Подсчитать доходность инвестиций</button>
-            <button>Узнать больше</button>
+            <button onclick="document.getElementById('id-quiz').style.display='block'">Подсчитать доходность инвестиций</button>                
+            <button onclick="document.getElementById('id-contact').style.display='block'">Узнать больше</button>
         </div>
     </section>
+
+
+    <div id="id-quiz" class="modal">      
+        <form class="modal-content animate quiz" name="quiz">
+            <div class="close-container">
+                <h2> Доходность инвестиций</h2>
+                <span onclick="document.getElementById('id-quiz').style.display='none'" class="close" title="Close Modal">&times;</span>
+            </div>
+            <div class="container">
+                <div>Первоначальный взнос, $</div>
+                <div class="range_box">               
+                    <input type="range" class="range range-payment" value="5" min="1" max="10" name="range-payment">
+                    <span class="range-value range-payment-value">50 000$</span>
+                </div>   
+                <div>Срок инвестиций, мес</div>
+                <div class="range_box">            
+                    <input type="range" class="range range-month" value="0" min="3" max="36" name="range-month">
+                    <span class="range-value range-month-value">17</span>
+                </div> 
+                <input required type="tel" placeholder="Введите телефон" name="user-phone" > 
+                <div class="submit">                 
+                    <button onclick="document.getElementById('id-quiz').style.display='none'" type="submit" name='submit'>Рассчитать прибыль</button>
+                </div>
+            </div>    
+        </form>
+    </div>
+
+    <div id="id-contact" class="modal">      
+        <form class="modal-content animate contact" name="contact">
+            <div class="close-container">
+                <h2> Свяжитесь с нами!</h2>
+                <span onclick="document.getElementById('id-contact').style.display='none'" class="close" title="Close Modal">&times;</span>
+            </div>
+            <div class="container">
+                <div>Свяжитесь с нами и мы будем рады ответить на любой Ваш вопрос и дать информацию по самым выгодным предлложением на данный момент.</div>
+                <a href="tel:+375297691180" class="contacts__phone">Позвоните нам: +375 (29) 769-11-80</a>
+                <a href="https://t.me/tatsiana_karabanava">или напишите в <b>telegram</b>:</a>              
+                <div>или закажите звонок:</div>
+                <input required type="tel" placeholder="Введите телефон" name="user-phone"> 
+                <div class="submit">                 
+                    <button onclick="document.getElementById('id-contact').style.display='none'" type="submit" name='submit'>Свяжитесь со мной</button>
+                </div>
+            </div>    
+        </form>
+    </div>
+
+
 </div>
 <div class="additional-info">
     <section class="why-cyprus">

@@ -1,5 +1,5 @@
 import { UserCredential } from "firebase/auth";
-import { currDB, userStorage } from "../../dataBase/serviceDB";
+import { currDB } from "../../dataBase/serviceDB";
 import { ObjectDB } from "../abstracts/ObjectDB";
 import { idDB } from "../interfacesAndTypes/idDB";
 import { tableRecord } from "../interfacesAndTypes/tableRecord";
@@ -43,11 +43,27 @@ export class User extends ObjectDB {
         });
     }
 
+    async addAnswerQuiz(quiz: string, phone: string, month: string, payment: string){
+
+        let today = new Date().toLocaleString();
+
+        currDB.write([{'id': phone, 'quiz': quiz, 'month': month, 'payment': payment, 'date': today}], dbTables.quizzes);
+
+    }
+
+    async addLead(leadPhone: string, userPhone: string){
+
+        let today = new Date().toLocaleString();
+
+        currDB.write([{'id': leadPhone, 'userPhone': userPhone, 'date': today}], dbTables.leads);
+
+    }    
+
     handleAuth(credential: UserCredential) {
         const serverData = credential.user;
         if(serverData)
             this._authorized = true;
-        return this._authorized;}
+        return this._authorized}
 
     get phone(): idDB{
         return this._phone;
