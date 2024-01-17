@@ -17,8 +17,20 @@ input[type=text], [type=email], [type=tel], input[type=password] {
     float: right;
     padding-top: 16px;
   }
+
+  @keyframes apear {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+
+  // @keyframes disapear {
+  //   100% {opacity: 1;}
+  //   0% {opacity: 0;}   
+  // }
   
   .modal {
+    opacity: 0;
+    animation: apear 1s forwards;
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -36,28 +48,41 @@ input[type=text], [type=email], [type=tel], input[type=password] {
       align-self: end;
     }
 
+    // .modal-hidden {
+    //   opacity: 1;
+    //   animation: disapear 2.5s forwards;
+    // }
+
     .close-container {
       text-align: center;
-      margin: 24px 0px 30px 0px;
+      margin: 20px 0px 0 0px;
       position: relative;
+      .close-container_header{
+        padding-top: 15px;
+      }
     }
 
     .container{
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: stretch;
       padding: 16px;
       a{
-        border: solid #8D5C34 2px;
-        border-radius: 8px;
-        padding: 10px;
-        margin: 10px 0 10px 0;
+        margin: 10px 100px 10px 100px;
+        @media (max-width: 500px) {
+          margin: 10px 30px 10px 30px;  
+        }
+      //   border: solid #8D5C34 2px;
+      //   border-radius: 8px;
+      //   padding: 10px;
+      //   margin: 10px 0 10px 0;
       }
-      // div{
-      //   display: flex;
-      //   flex-direction: column;
-      //   align-items: end;   
-      // }
+      div{
+        text-align: center;
+        // flex-direction: column;
+        // align-items: end;   
+        margin: 10px 0 10px;
+      }
 
       .submit{
         display: flex;
@@ -65,7 +90,7 @@ input[type=text], [type=email], [type=tel], input[type=password] {
         align-items: end;
         justify-items: end;
         align-self: end;
-        margin-top: 30px;
+        margin-top: 20px;
       }
 
       // .container div{
@@ -79,10 +104,28 @@ input[type=text], [type=email], [type=tel], input[type=password] {
   
   .modal-content {
     background-color: #fefefe;
-    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    margin: 5% auto 5% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
     border-radius: 8px;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: max(40%, 300px); /* Could be more or less, depending on screen size */
+  }
+
+  .modal-content-small {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; 
+    border: 1px solid #888;
+    border-radius: 8px;
+    max-width: max(40%, 300px); 
+    height: max(40%, 300px);
+    text-align: center;
+    vertical-align: middle;
+    padding: 20px 20px 20px 20px;
+    background-color: rgb(207, 232, 224);
+    font-size: large;
+    font-weight: bold;
+    div{
+      margin-top: 100px;
+    }
   }
   
   .close {

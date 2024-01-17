@@ -11,12 +11,15 @@
         </div>
     </section>
 
-
     <div id="id-quiz" class="modal">      
         <form class="modal-content animate quiz" name="quiz">
             <div class="close-container">
-                <h2> Доходность инвестиций</h2>
-                <span onclick="document.getElementById('id-quiz').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <div class="close-container_header">
+                    <span onclick="document.getElementById('id-quiz').style.display='none'" class="close" title="Close Modal">&times;</span>
+                </div>
+                <div>
+                    <h2>Доходность инвестиций</h2>
+                </div>
             </div>
             <div class="container">
                 <div>Первоначальный взнос, $</div>
@@ -31,7 +34,7 @@
                 </div> 
                 <input required type="tel" placeholder="Введите телефон" name="user-phone" > 
                 <div class="submit">                 
-                    <button onclick="document.getElementById('id-quiz').style.display='none'" type="submit" name='submit'>Рассчитать прибыль</button>
+                    <button type="submit" name='submit'>Рассчитать прибыль</button>
                 </div>
             </div>    
         </form>
@@ -40,22 +43,31 @@
     <div id="id-contact" class="modal">      
         <form class="modal-content animate contact" name="contact">
             <div class="close-container">
-                <h2> Свяжитесь с нами!</h2>
                 <span onclick="document.getElementById('id-contact').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <h2>Свяжитесь с нами!</h2>
             </div>
             <div class="container">
                 <div>Свяжитесь с нами и мы будем рады ответить на любой Ваш вопрос и дать информацию по самым выгодным предлложением на данный момент.</div>
-                <a href="tel:+375297691180" class="contacts__phone">Позвоните нам: +375 (29) 769-11-80</a>
-                <a href="https://t.me/tatsiana_karabanava">или напишите в <b>telegram</b>:</a>              
+                <a class="contacts__phone" href="tel:+375297691180"><button type="button"><p>Позвоните нам:</p><p><h6>+375 (29) 769-11-80</h6></p></button></a>
+                <a href="https://t.me/tatsiana_karabanava"><button type="button">или напишите в <b>telegram</b>:</button></a>              
                 <div>или закажите звонок:</div>
                 <input required type="tel" placeholder="Введите телефон" name="user-phone"> 
                 <div class="submit">                 
-                    <button onclick="document.getElementById('id-contact').style.display='none'" type="submit" name='submit'>Свяжитесь со мной</button>
+                    <button type="submit" name='submit'>Свяжитесь со мной</button>
                 </div>
             </div>    
         </form>
     </div>
 
+
+    <div id="id-recall" class="modal id-recall">      
+        <form class="modal-content-small animate recall" name="recall">
+            <div class="close-container">
+                <span onclick="document.getElementById('id-recall').style.display='none'" class="close" title="Close Modal">&times;</span>
+            </div>
+            <div>Мы свяжемся с Вами в ближайшее время!</div> 
+        </form>
+    </div>
 
 </div>
 <div class="additional-info">

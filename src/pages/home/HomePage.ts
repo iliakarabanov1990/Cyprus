@@ -25,13 +25,14 @@ export class HomePage extends AbstractPage {
 
     const quizForm = cloneTemplateItemEl.querySelector('.quiz')! as HTMLFormElement;
     const contactForm = cloneTemplateItemEl.querySelector('.contact')! as HTMLFormElement;
-    quizForm.addEventListener("submit", (event) => this.createQuizAnswer(event, quizForm));
-    contactForm.addEventListener("submit", (event) => this.createLead(event, contactForm));
+    const recallForm = cloneTemplateItemEl.querySelector('.id-recall')! as HTMLElement;
+    quizForm.addEventListener("submit", (event) => this.createQuizAnswer(event, quizForm, recallForm));
+    contactForm.addEventListener("submit", (event) => this.createLead(event, contactForm, recallForm));
 
     return cloneTemplateItemEl;
   }
 
-  async createQuizAnswer(event: SubmitEvent, quizForm: HTMLFormElement): Promise<void>{
+  async createQuizAnswer(event: SubmitEvent, quizForm: HTMLFormElement, recallForm: HTMLElement): Promise<void>{
   
     event.preventDefault();
   
@@ -41,13 +42,14 @@ export class HomePage extends AbstractPage {
     
     (this.user as User).addAnswerQuiz('Расчет прибыли', phone, month, payment);
 
-    // quizForm.style.display = 'none';
-  
-    // setTimeout(()=>{(this.appRouter as Router).navigate(window.location.pathname)}, 100);
+    document.getElementById('id-quiz')!.style.display='none';
+
+    recallForm.style.display = "block";
+    setTimeout(()=>{recallForm.style.display = "none"}, 4000);
   
   }
   
-  async createLead(event: SubmitEvent, contactForm: HTMLFormElement): Promise<void>{
+  async createLead(event: SubmitEvent, contactForm: HTMLFormElement, recallForm: HTMLElement): Promise<void>{
     
     event.preventDefault();
   
@@ -55,9 +57,10 @@ export class HomePage extends AbstractPage {
   
     (this.user as User).addLead(phone, (this.user as User).phone as string);
 
-    // contactForm.style.display = 'none';
+    recallForm.style.display = "block";
+    document.getElementById('id-contact')!.style.display='none';
   
-    // setTimeout(()=>{(this.appRouter as Router).navigate(window.location.pathname)}, 100);
+    setTimeout(()=>{recallForm.style.display = "none"}, 4000);
   
   }
 }

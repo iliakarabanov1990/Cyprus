@@ -11,7 +11,7 @@ $small-font-size: .8rem;
 $medium-font-size: 1rem;
 $large-font-size: 1.5rem;
 $small-header-font-size: 1rem;
-$medium-header-font-size: 1.3rem;
+$medium-header-font-size: 1.5rem;
 $large-header-font-size: 2.5rem;
 
 @mixin flex-box($direction: column, $justify-content: space-between, $align-items: center, $gap: 2vw, $flex-wrap: nowrap){
@@ -33,7 +33,10 @@ html{
 }
 
 h1{
-  font-size: $large-header-font-size; 
+  font-size: $large-header-font-size;
+  @media  (max-width: 500px) {
+    font-size: $medium-header-font-size;
+  } 
   font-weight: bolder;
 }
 
@@ -153,6 +156,9 @@ footer{
   color: $white-color;
   span{
     line-height: calc($large-header-font-size*1.2);
+    @media  (max-width: 500px) {
+      line-height: calc($medium-header-font-size*1.2);
+    }
   }
   h1{
     padding-top: 20vh;
